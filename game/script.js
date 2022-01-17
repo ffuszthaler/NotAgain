@@ -1,6 +1,7 @@
 import GLOBAL from '../engine/Globals.js';
 import Engine from '../engine/Engine.js';
 
+import Scene from '../engine/Scene.js';
 import SpriteMap from '../engine/sprite/SpriteMap.js';
 import Sprite from '../engine/sprite/Sprite.js';
 import Keyboard from '../engine/input/Keyboard.js';
@@ -18,7 +19,7 @@ const GAME = {
   debug: false,
 };
 
-// set global values to application specific values
+// set global values to game specific values
 GLOBAL.widowWidth = GAME.width;
 GLOBAL.windowHeight = GAME.height;
 GLOBAL.debug = GAME.debug;
@@ -102,14 +103,21 @@ const playerCode = (deltaTime) => {
   player.y += deltaTime * dy * velocity;
 };
 
+// game scope
 class notAgain extends Engine {
+  // main game scene
+  gameScene = new Scene();
+
   init() {
     super.init();
+
     player = new SpriteMap(sprites, state, 200, 200, 0.3);
-    gameObjects.push(player);
+    // gameObjects.push(player);
+    this.gameScene.addToScene(player);
 
     sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
-    gameObjects.push(sprite);
+    // gameObjects.push(sprite);
+    this.gameScene.addToScene(sprite);
 
     keyboard = new Keyboard();
     super.continue();
@@ -117,9 +125,11 @@ class notAgain extends Engine {
 
   update() {
     // update our game objects
-    gameObjects.forEach((gameObject) => {
-      gameObject.update(GLOBAL.deltaTime);
-    });
+    // gameObjects.forEach((gameObject) => {
+    //   gameObject.update(GLOBAL.deltaTime);
+    // });
+
+    this.gameScene.update();
 
     playerCode(GLOBAL.deltaTime);
   }
@@ -130,9 +140,11 @@ class notAgain extends Engine {
     GLOBAL.ctx.clearRect(0, 0, GAME.width, GAME.height);
 
     // render game objects
-    gameObjects.forEach((gameObject) => {
-      gameObject.render();
-    });
+    // gameObjects.forEach((gameObject) => {
+    //   gameObject.render();
+    // });
+
+    this.gameScene.render();
   }
 }
 

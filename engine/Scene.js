@@ -1,16 +1,30 @@
+import GLOBAL from './Globals.js';
+
 class Scene {
   actors;
 
-  constructor(actors = []) {
-    this.actors = actors;
+  constructor() {
+    this.actors = [];
+
+    this.init();
   }
 
   init() {}
 
-  update() {}
+  render() {
+    this.actors.forEach((actor) => {
+      actor.render();
+    });
+  }
+
+  update() {
+    this.actors.forEach((actor) => {
+      actor.update(GLOBAL.deltaTime);
+    });
+  }
 
   addToScene(actor) {
-    actors.push(actor);
+    this.actors.push(actor);
   }
 
   removeFromScene(actor) {
