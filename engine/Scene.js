@@ -11,15 +11,15 @@ class Scene {
 
   init() {}
 
-  render() {
-    this.actors.forEach((actor) => {
-      actor.render();
-    });
-  }
-
   update() {
     this.actors.forEach((actor) => {
       actor.update(GLOBAL.deltaTime);
+    });
+  }
+
+  render() {
+    this.actors.forEach((actor) => {
+      actor.render();
     });
   }
 
