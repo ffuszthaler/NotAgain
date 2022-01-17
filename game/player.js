@@ -49,7 +49,9 @@ export default function playerCharacter(deltaTime) {
     dy /= Math.hypot(dx, dy);
   }
 
-  GLOBAL.player.state = dx === 0 && dy === 0 ? 'idle' : 'run';
+  // GLOBAL.player.state = dx === 0 && dy === 0 ? 'idle' : 'run';
+  // sprite hack bc i dont have a running cycle
+  GLOBAL.player.state = dx === 0 && dy === 0 ? 'anton' : 'anton';
 
   GLOBAL.player.x += deltaTime * dx * velocity;
   GLOBAL.player.y += deltaTime * dy * velocity;
