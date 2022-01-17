@@ -4,7 +4,7 @@ let randomNumberBetween = (minRandomNumber, maxRandomNumber) => {
   return Math.floor(Math.random() * (maxRandomNumber - minRandomNumber + 1) + minRandomNumber);
 };
 
-class RandomDispatcher {
+class Random {
   constructor(callback, options = { min: 1000, max: 5000 }) {
     if (typeof callback !== 'function') throw Error('Callback must be a function.');
 
