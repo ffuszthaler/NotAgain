@@ -112,11 +112,9 @@ class notAgain extends Engine {
     super.init();
 
     player = new SpriteMap(sprites, state, 200, 200, 0.3);
-    // gameObjects.push(player);
     this.gameScene.addToScene(player);
 
     sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
-    // gameObjects.push(sprite);
     this.gameScene.addToScene(sprite);
 
     keyboard = new Keyboard();
@@ -124,11 +122,6 @@ class notAgain extends Engine {
   }
 
   update() {
-    // update our game objects
-    // gameObjects.forEach((gameObject) => {
-    //   gameObject.update(GLOBAL.deltaTime);
-    // });
-
     this.gameScene.update();
 
     playerCode(GLOBAL.deltaTime);
@@ -138,11 +131,6 @@ class notAgain extends Engine {
     // clear canvas before drawing
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GAME.width, GAME.height);
-
-    // render game objects
-    // gameObjects.forEach((gameObject) => {
-    //   gameObject.render();
-    // });
 
     this.gameScene.render();
   }
