@@ -24,7 +24,7 @@ const Anton = {
     });
 
     // speed boost
-    GLOBAL.keyboard.keyPressed('Space', () => {
+    GLOBAL.keyboard.keyPressed('ShiftLeft', () => {
       // 1.5x of normal speed (0.3)
       velocity = 0.45;
     });
