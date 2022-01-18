@@ -27,8 +27,8 @@ export default function playerCharacter(deltaTime) {
     velocity = 0.45;
   });
 
-  // save last view direction
-  if (dx != 0) GLOBAL.player.lastDirection = dx;
+  // save last view direction - fucks with mouse rotation
+  // if (dx != 0) GLOBAL.player.lastDirection = dx;
 
   // bounds detection
   // right
