@@ -1,6 +1,7 @@
 // Utility classes to load sprite sheets
 
 import GLOBAL from '../Globals.js';
+import Projectile from '../actors/Projectile.js';
 
 import { degToRad } from '../utilities/Math.js';
 
@@ -73,8 +74,9 @@ class SpriteMap {
     this.height = coords.sourceHeight * this.#scale;
 
     // calculate angle for rotation and rotate sprite
-    let angle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
-    GLOBAL.ctx.rotate(angle);
+    GLOBAL.playerAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
+    console.log('player angle: ', GLOBAL.playerAngle);
+    GLOBAL.ctx.rotate(GLOBAL.playerAngle);
 
     // red debug line
     GLOBAL.ctx.strokeStyle = 'red';
@@ -95,6 +97,11 @@ class SpriteMap {
       this.width, // dest width
       this.height // dest height
     );
+
+    // if (GLOBAL.mouse.mouseKeys[0] === true) {
+    //   let proj = new Projectile(0, 0, 5, 10);
+    //   proj.render();
+    // }
 
     // reset any remaining transform call
     GLOBAL.ctx.resetTransform();

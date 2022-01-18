@@ -4,11 +4,12 @@ import Engine from '../engine/Engine.js';
 import Scene from '../engine/Scene.js';
 import SpriteMap from '../engine/sprite/SpriteMap.js';
 import Sprite from '../engine/sprite/Sprite.js';
+import Projectile from '../engine/actors/Projectile.js';
+
 import Keyboard from '../engine/input/Keyboard.js';
+import Mouse from '../engine/input/Mouse.js';
 
-// import Mouse from '../engine/input/Mouse.js';
-
-import playerCharacter from './player.js';
+import Anton from './anton.js';
 
 // application specific globals
 let sprite;
@@ -75,7 +76,7 @@ class notAgain extends Engine {
     this.gameScene.addToScene(sprite);
 
     GLOBAL.keyboard = new Keyboard();
-    // GLOBAL.mouse = new Mouse();
+    GLOBAL.mouse = new Mouse();
 
     super.continue();
   }
@@ -83,7 +84,7 @@ class notAgain extends Engine {
   update() {
     this.gameScene.update();
 
-    playerCharacter(GLOBAL.deltaTime);
+    Anton.update(GLOBAL.deltaTime);
 
     GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
     GLOBAL.ctx.clearRect(0, 0, 300, 300);
@@ -93,6 +94,13 @@ class notAgain extends Engine {
     // clear canvas before drawing
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GAME.width, GAME.height);
+
+    if (GLOBAL.mouse.mouseKeys[0] === true) {
+      let proj = new Projectile(GLOBAL.player.x, GLOBAL.player.y - 50, 5, 10);
+      this.gameScene.addToScene(proj);
+    }
+
+    Anton.render();
 
     this.gameScene.render();
   }
