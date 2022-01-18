@@ -57,6 +57,9 @@ const Anton = {
 
     GLOBAL.player.x += deltaTime * dx * velocity;
     GLOBAL.player.y += deltaTime * dy * velocity;
+
+    // console.log('anton-x: ', GLOBAL.player.x);
+    // console.log('anton-y: ', GLOBAL.player.y);
   },
 
   render: function () {},

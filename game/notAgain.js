@@ -86,7 +86,7 @@ class notAgain extends Engine {
 
     Anton.update(GLOBAL.deltaTime);
 
-    GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+    GLOBAL.ctx.setTransform(); // reset transform
     GLOBAL.ctx.clearRect(0, 0, 300, 300);
   }
 
@@ -95,12 +95,14 @@ class notAgain extends Engine {
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GAME.width, GAME.height);
 
+    Anton.render();
+
     if (GLOBAL.mouse.mouseKeys[0] === true) {
+      // console.log('projectile-x: ', GLOBAL.player.x);
+      // console.log('projectile-y: ', GLOBAL.player.y);
       let proj = new Projectile(GLOBAL.player.x, GLOBAL.player.y - 50, 5, 10);
       this.gameScene.addToScene(proj);
     }
-
-    Anton.render();
 
     this.gameScene.render();
   }

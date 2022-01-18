@@ -38,8 +38,8 @@ class SpriteMap {
 
     function mouseEvents(e) {
       const bounds = GLOBAL.canvas.getBoundingClientRect();
-      GLOBAL.mouse.x = e.pageX - bounds.left - scrollX;
-      GLOBAL.mouse.y = e.pageY - bounds.top - scrollY;
+      GLOBAL.mouse.x = e.pageX - bounds.left - window.scrollX;
+      GLOBAL.mouse.y = e.pageY - bounds.top - window.scrollY;
     }
     document.addEventListener('mousemove', mouseEvents);
   }
@@ -75,14 +75,14 @@ class SpriteMap {
 
     // calculate angle for rotation and rotate sprite
     GLOBAL.playerAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
-    console.log('player angle: ', GLOBAL.playerAngle);
+    // console.log('player angle: ', GLOBAL.playerAngle);
     GLOBAL.ctx.rotate(GLOBAL.playerAngle);
 
     // red debug line
     GLOBAL.ctx.strokeStyle = 'red';
     GLOBAL.ctx.stroke();
     GLOBAL.ctx.beginPath();
-    GLOBAL.ctx.moveTo(0, 0);
+    GLOBAL.ctx.moveTo(0, -20);
     GLOBAL.ctx.lineTo(0, -100);
     GLOBAL.ctx.stroke();
 
