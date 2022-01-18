@@ -23,6 +23,8 @@ class SpriteMap {
 
     this.lastDirection;
 
+    this.rotation;
+
     this.init();
   }
 
@@ -36,12 +38,26 @@ class SpriteMap {
     // get mouse position relative to the canvas
     GLOBAL.mouse = { x: 0, y: 0 };
 
-    function mouseEvents(e) {
-      const bounds = GLOBAL.canvas.getBoundingClientRect();
-      GLOBAL.mouse.x = e.pageX - bounds.left - window.scrollX;
-      GLOBAL.mouse.y = e.pageY - bounds.top - window.scrollY;
-    }
-    document.addEventListener('mousemove', mouseEvents);
+    // function mouseEvents(e) {
+    //   const bounds = GLOBAL.canvas.getBoundingClientRect();
+    //   GLOBAL.mouse.x = e.pageX - bounds.left - window.scrollX;
+    //   GLOBAL.mouse.y = e.pageY - bounds.top - window.scrollY;
+    // }
+    // document.addEventListener('mousemove', mouseEvents);
+
+    GLOBAL.canvas.addEventListener('mousemove', (e) => {
+      //  Calculate rotation angle
+      let mouseX = e.offsetX;
+      let mouseY = e.offsetY;
+      let dx = mouseX - this.x;
+      let dy = mouseY - this.y;
+      console.log(GLOBAL.mouse);
+
+      //  Save rotation angle
+      this.rotation = Math.atan2(dy, dx) + degToRad(90);
+
+      console.log('rotation: ', this.rotation);
+    });
   }
 
   update(deltaTime) {}
@@ -74,9 +90,15 @@ class SpriteMap {
     this.height = coords.sourceHeight * this.#scale;
 
     // calculate angle for rotation and rotate sprite
-    GLOBAL.playerAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
+    // GLOBAL.playerAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
     // console.log('player angle: ', GLOBAL.playerAngle);
-    GLOBAL.ctx.rotate(GLOBAL.playerAngle);
+    // GLOBAL.ctx.rotate(GLOBAL.playerAngle);
+
+    //  Manually set transform values
+    GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
+
+    //  Rotate player according to mouse position
+    GLOBAL.ctx.rotate(this.rotation);
 
     // red debug line
     GLOBAL.ctx.strokeStyle = 'red';
@@ -86,6 +108,7 @@ class SpriteMap {
     GLOBAL.ctx.lineTo(0, -100);
     GLOBAL.ctx.stroke();
 
+    //  Draw player
     GLOBAL.ctx.drawImage(
       this.sprites[this.state].image, // src
       coords.sourceX, // source x
@@ -97,6 +120,9 @@ class SpriteMap {
       this.width, // dest width
       this.height // dest height
     );
+
+    //  Reset transform values back to normal
+    GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // if (GLOBAL.mouse.mouseKeys[0] === true) {
     //   let proj = new Projectile(0, 0, 5, 10);

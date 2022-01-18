@@ -21,7 +21,7 @@ class Projectile extends Actor {
     // calculate angle for rotation and rotate sprite
     // GLOBAL.projectileAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
     this.projectileAngle = GLOBAL.playerAngle;
-    console.log('projectile angle: ', this.projectileAngle);
+    // console.log('projectile angle: ', this.projectileAngle);
     GLOBAL.ctx.fillRect(this.x, this.y, this.width, this.height);
     GLOBAL.ctx.rotate(this.projectileAngle);
   }
