@@ -2,6 +2,8 @@
 
 import GLOBAL from '../Globals.js';
 
+import { degToRad } from '../utilities/Math.js';
+
 class SpriteMap {
   #scale;
 
@@ -29,6 +31,16 @@ class SpriteMap {
       sprite.image = new Image();
       sprite.image.src = sprite.src;
     });
+
+    // get mouse position relative to the canvas
+    GLOBAL.mouse = { x: 0, y: 0 };
+
+    function mouseEvents(e) {
+      const bounds = GLOBAL.canvas.getBoundingClientRect();
+      GLOBAL.mouse.x = e.pageX - bounds.left - scrollX;
+      GLOBAL.mouse.y = e.pageY - bounds.top - scrollY;
+    }
+    document.addEventListener('mousemove', mouseEvents);
   }
 
   update(deltaTime) {}
@@ -59,6 +71,10 @@ class SpriteMap {
     // scale sprite frames according to scaling factor
     this.width = coords.sourceWidth * this.#scale;
     this.height = coords.sourceHeight * this.#scale;
+
+    // calculate angle for rotation and rotate sprite
+    let angle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
+    GLOBAL.ctx.rotate(angle);
 
     GLOBAL.ctx.drawImage(
       this.sprites[this.state].image, // src

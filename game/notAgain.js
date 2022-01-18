@@ -60,26 +60,6 @@ let sprites = {
 };
 let state = 'idle';
 
-GLOBAL.mouse = { x: 0, y: 0 };
-function mouseEvents(e) {
-  const bounds = GLOBAL.canvas.getBoundingClientRect();
-  GLOBAL.mouse.x = e.pageX - bounds.left - scrollX;
-  GLOBAL.mouse.y = e.pageY - bounds.top - scrollY;
-}
-document.addEventListener('mousemove', mouseEvents);
-
-function drawRotated(x, y, angle) {
-  GLOBAL.ctx.setTransform(1, 0, 0, 1, x, y);
-  GLOBAL.ctx.rotate(angle);
-  GLOBAL.ctx.beginPath();
-  GLOBAL.ctx.arc(0, 0, 100, 0, Math.PI * 2);
-  GLOBAL.ctx.moveTo(-100, 0);
-  GLOBAL.ctx.lineTo(100, 0);
-  // GLOBAL.ctx.lineTo(60, -80);
-  GLOBAL.ctx.closePath();
-  GLOBAL.ctx.stroke();
-}
-
 // game scope
 class notAgain extends Engine {
   // main game scene
@@ -115,10 +95,6 @@ class notAgain extends Engine {
     GLOBAL.ctx.clearRect(0, 0, GAME.width, GAME.height);
 
     this.gameScene.render();
-
-    var angle = Math.atan2(GLOBAL.mouse.y - 150, GLOBAL.mouse.x - 400);
-    drawRotated(400, 150, angle);
-    //          x    y    angle
   }
 }
 
