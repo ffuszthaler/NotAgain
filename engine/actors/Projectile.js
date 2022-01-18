@@ -1,4 +1,5 @@
 import GLOBAL from '../Globals.js';
+
 import Actor from './Actor.js';
 import { degToRad } from '../utilities/Math.js';
 
@@ -31,7 +32,7 @@ class Projectile extends Actor {
     super.render();
 
     // reset any remaining transform call
-    // GLOBAL.ctx.resetTransform();
+    GLOBAL.ctx.resetTransform();
   }
 }
 
