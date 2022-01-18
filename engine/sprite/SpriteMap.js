@@ -35,23 +35,12 @@ class SpriteMap {
       sprite.image.src = sprite.src;
     });
 
-    // get mouse position relative to the canvas
-    GLOBAL.mouse = { x: 0, y: 0 };
-
-    // function mouseEvents(e) {
-    //   const bounds = GLOBAL.canvas.getBoundingClientRect();
-    //   GLOBAL.mouse.x = e.pageX - bounds.left - window.scrollX;
-    //   GLOBAL.mouse.y = e.pageY - bounds.top - window.scrollY;
-    // }
-    // document.addEventListener('mousemove', mouseEvents);
-
     GLOBAL.canvas.addEventListener('mousemove', (e) => {
       //  Calculate rotation angle
       let mouseX = e.offsetX;
       let mouseY = e.offsetY;
       let dx = mouseX - this.x;
       let dy = mouseY - this.y;
-      console.log(GLOBAL.mouse);
 
       //  Save rotation angle
       this.rotation = Math.atan2(dy, dx) + degToRad(90);
@@ -88,11 +77,6 @@ class SpriteMap {
     // scale sprite frames according to scaling factor
     this.width = coords.sourceWidth * this.#scale;
     this.height = coords.sourceHeight * this.#scale;
-
-    // calculate angle for rotation and rotate sprite
-    // GLOBAL.playerAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
-    // console.log('player angle: ', GLOBAL.playerAngle);
-    // GLOBAL.ctx.rotate(GLOBAL.playerAngle);
 
     //  Manually set transform values
     GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
