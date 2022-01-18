@@ -30,15 +30,8 @@ class Projectile extends Actor {
   render() {
     super.render();
 
-    // GLOBAL.ctx.fillStyle = 'blue';
-    // // calculate angle for rotation and rotate sprite
-    // GLOBAL.projectileAngle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
-    // GLOBAL.ctx.rotate(GLOBAL.projectileAngle);
-    // // console.log('projectile angle: ', GLOBAL.playerAngle);
-    // GLOBAL.ctx.fillRect(this.x, this.y, this.width, this.height);
-
     // reset any remaining transform call
-    GLOBAL.ctx.resetTransform();
+    // GLOBAL.ctx.resetTransform();
   }
 }
 
