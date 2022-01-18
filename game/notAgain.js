@@ -48,12 +48,12 @@ let sprites = {
     image: null,
   },
   anton: {
-    src: './assets/anton.png',
+    src: './assets/anton_still.png',
     frames: 1,
     fps: 1,
     frameSize: {
-      width: 64,
-      height: 64,
+      width: 128,
+      height: 128,
     },
     image: null,
   },
@@ -68,7 +68,7 @@ class notAgain extends Engine {
   init() {
     super.init();
 
-    GLOBAL.player = new SpriteMap(sprites, state, 200, 200, 2.5);
+    GLOBAL.player = new SpriteMap(sprites, state, 200, 200, 1);
     this.gameScene.addToScene(GLOBAL.player);
 
     sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
