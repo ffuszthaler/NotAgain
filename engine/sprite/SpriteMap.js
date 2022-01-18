@@ -76,6 +76,14 @@ class SpriteMap {
     let angle = Math.atan2(GLOBAL.mouse.y - this.y, GLOBAL.mouse.x - this.x) + degToRad(90);
     GLOBAL.ctx.rotate(angle);
 
+    // red debug line
+    GLOBAL.ctx.strokeStyle = 'red';
+    GLOBAL.ctx.stroke();
+    GLOBAL.ctx.beginPath();
+    GLOBAL.ctx.moveTo(0, 0);
+    GLOBAL.ctx.lineTo(0, -100);
+    GLOBAL.ctx.stroke();
+
     GLOBAL.ctx.drawImage(
       this.sprites[this.state].image, // src
       coords.sourceX, // source x

@@ -6,7 +6,7 @@ import SpriteMap from '../engine/sprite/SpriteMap.js';
 import Sprite from '../engine/sprite/Sprite.js';
 import Keyboard from '../engine/input/Keyboard.js';
 
-import Mouse from '../engine/input/Mouse.js';
+// import Mouse from '../engine/input/Mouse.js';
 
 import playerCharacter from './player.js';
 
