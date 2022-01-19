@@ -3,7 +3,7 @@ const GLOBAL = {
   canvas: undefined,
 
   // canvas size
-  widowWidth: undefined,
+  windowWidth: undefined,
   windowHeight: undefined,
 
   // engine time
