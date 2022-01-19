@@ -6,8 +6,6 @@ import Projectile from '../actors/Projectile.js';
 import { degToRad } from '../utilities/Math.js';
 
 class SpriteMap {
-  #scale;
-
   constructor(sprites, state, x, y, scale) {
     this.sprites = sprites;
 
@@ -19,7 +17,7 @@ class SpriteMap {
     this.x = x;
     this.y = y;
 
-    this.#scale = scale;
+    this.scale = scale;
 
     this.lastDirection;
 
@@ -35,6 +33,7 @@ class SpriteMap {
       sprite.image.src = sprite.src;
     });
 
+    // calculate mouse rotation
     GLOBAL.canvas.addEventListener('mousemove', (e) => {
       //  Calculate rotation angle
       let mouseX = e.offsetX;
@@ -45,7 +44,7 @@ class SpriteMap {
       //  Save rotation angle
       this.rotation = Math.atan2(dy, dx) + degToRad(90);
 
-      console.log('rotation: ', this.rotation);
+      // console.log('rotation: ', this.rotation);
     });
   }
 
@@ -75,14 +74,15 @@ class SpriteMap {
     let coords = this.getImageSpriteCoordinates(this.sprites[this.state]);
 
     // scale sprite frames according to scaling factor
-    this.width = coords.sourceWidth * this.#scale;
-    this.height = coords.sourceHeight * this.#scale;
+    this.width = coords.sourceWidth * this.scale;
+    this.height = coords.sourceHeight * this.scale;
 
     //  Manually set transform values
     GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
 
     //  Rotate player according to mouse position
     GLOBAL.ctx.rotate(this.rotation);
+    GLOBAL.rotation = this.rotation;
 
     // red debug line
     GLOBAL.ctx.strokeStyle = 'red';

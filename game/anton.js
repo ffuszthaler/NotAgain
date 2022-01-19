@@ -1,68 +1,89 @@
 import GLOBAL from '../engine/Globals.js';
-import { degToRad } from '../engine/utilities/Math.js';
 
-const Anton = {
-  update: function (deltaTime) {
-    let dx = 0;
-    let dy = 0;
-    let velocity = 0.3;
+import SpriteMap from '../engine/sprite/SpriteMap.js';
+import Actor from '../engine/actors/Actor.js';
+import Keyboard from '../engine/input/Keyboard.js';
 
-    GLOBAL.keyboard.keyPressed('KeyW', () => {
-      dy = -1;
+class Anton extends Actor {
+  constructor(sprites, state, scale, x, y) {
+    super(x, y);
+
+    this.x = x;
+    this.y = y;
+
+    this.dx = 0;
+    this.dy = 0;
+
+    this.velocity = 0.3;
+
+    this.sprites = sprites;
+
+    this.state = state;
+
+    this.scale = scale;
+
+    this.init();
+  }
+
+  init() {
+    // super.init();
+
+    this.texture = new SpriteMap(this.sprites, this.state, this.x, this.y, this.scale);
+
+    this.keyboard = new Keyboard();
+  }
+
+  update(deltaTime) {
+    // super.update();
+
+    this.keyboard.keyPressed('KeyW', (isPressed, currentKeys) => {
+      if (!currentKeys['KeyS']) this.dy = isPressed ? -1 : 0;
     });
 
-    GLOBAL.keyboard.keyPressed('KeyA', () => {
-      dx = -1;
+    this.keyboard.keyPressed('KeyA', (isPressed, currentKeys) => {
+      if (!currentKeys['KeyD']) this.dx = isPressed ? -1 : 0;
     });
 
-    GLOBAL.keyboard.keyPressed('KeyS', () => {
-      dy = 1;
+    this.keyboard.keyPressed('KeyS', (isPressed, currentKeys) => {
+      if (!currentKeys['KeyW']) this.dy = isPressed ? 1 : 0;
     });
 
-    GLOBAL.keyboard.keyPressed('KeyD', () => {
-      dx = 1;
+    this.keyboard.keyPressed('KeyD', (isPressed, currentKeys) => {
+      if (!currentKeys['KeyA']) this.dx = isPressed ? 1 : 0;
     });
-
-    // speed boost
-    GLOBAL.keyboard.keyPressed('ShiftLeft', () => {
-      // 1.5x of normal speed (0.3)
-      velocity = 0.45;
-    });
-
-    // save last view direction - fucks with mouse rotation
-    // if (dx != 0) GLOBAL.player.lastDirection = dx;
 
     // bounds detection
     // right
-    if (GLOBAL.player.x + GLOBAL.player.width / 2 > GLOBAL.widowWidth)
-      GLOBAL.player.x = GLOBAL.widowWidth - GLOBAL.player.width / 2;
+    if (this.texture.x + this.texture.width / 2 > GLOBAL.widowWidth)
+      this.texture.x = GLOBAL.widowWidth - this.texture.width / 2;
     // left
-    else if (GLOBAL.player.x - GLOBAL.player.width / 2 < 0) GLOBAL.player.x = 0 + GLOBAL.player.width / 2;
+    else if (this.texture.x - this.texture.width / 2 < 0) this.texture.x = 0 + this.texture.width / 2;
 
     // bottom
-    if (GLOBAL.player.y + GLOBAL.player.height / 2 > GLOBAL.windowHeight)
-      GLOBAL.player.y = GLOBAL.windowHeight - GLOBAL.player.height / 2;
+    if (this.texture.y + this.texture.height / 2 > GLOBAL.windowHeight)
+      this.texture.y = GLOBAL.windowHeight - this.texture.height / 2;
     // top
-    else if (GLOBAL.player.y - GLOBAL.player.height / 2 < 0) GLOBAL.player.y = 0 + GLOBAL.player.height / 2;
+    else if (this.texture.y - this.texture.height / 2 < 0) this.texture.y = 0 + this.texture.height / 2;
 
     // correct velocity for moving diagonally
-    if (dx !== 0 && dy !== 0) {
-      dx /= Math.hypot(dx, dy);
-      dy /= Math.hypot(dx, dy);
+    if (this.dx !== 0 && this.dy !== 0) {
+      this.dx /= Math.hypot(this.dx, this.dy);
+      this.dy /= Math.hypot(this.dx, this.dy);
     }
 
     // GLOBAL.player.state = dx === 0 && dy === 0 ? 'idle' : 'run';
     // sprite hack bc i dont have a running cycle rn
-    GLOBAL.player.state = dx === 0 && dy === 0 ? 'anton' : 'anton';
+    this.texture.state = this.dx === 0 && this.dy === 0 ? 'anton' : 'anton';
 
-    GLOBAL.player.x += deltaTime * dx * velocity;
-    GLOBAL.player.y += deltaTime * dy * velocity;
+    this.texture.x += deltaTime * this.dx * this.velocity;
+    this.texture.y += deltaTime * this.dy * this.velocity;
+  }
 
-    // console.log('anton-x: ', GLOBAL.player.x);
-    // console.log('anton-y: ', GLOBAL.player.y);
-  },
+  render() {
+    super.render();
 
-  render: function () {},
-};
+    this.texture.render();
+  }
+}
 
 export default Anton;

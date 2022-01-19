@@ -5,7 +5,11 @@ import GLOBAL from '../Globals.js';
 
 class Actor {
   constructor(x, y, width, height) {
-    this.init();
+    this.x;
+    this.y;
+
+    this.width;
+    this.height;
   }
 
   init() {}

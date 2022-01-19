@@ -34,11 +34,7 @@ class Keyboard extends InputMethod {
   }
 
   keyPressed(key, callback) {
-    if (this.currentKeys[key] === true) {
-      callback();
-    } else {
-      return false;
-    }
+    callback(this.currentKeys[key], this.currentKeys);
   }
 
   keyNotPressed(key, callback) {

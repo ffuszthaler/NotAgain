@@ -1,4 +1,5 @@
 import GLOBAL from './Globals.js';
+import Sprite from './sprite/Sprite.js';
 
 class Scene {
   actors;
@@ -11,9 +12,10 @@ class Scene {
 
   init() {}
 
-  update() {
+  update(deltaTime) {
+    // console.log(this.actors);
     this.actors.forEach((actor) => {
-      actor.update(GLOBAL.deltaTime);
+      actor.update(deltaTime);
     });
   }
 
