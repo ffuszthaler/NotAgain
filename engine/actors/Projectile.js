@@ -53,7 +53,7 @@ class Projectile extends Actor {
   }
 
   update() {
-    this.x = this.x + 1;
+    this.x = this.x + 2;
     // this.y = this.y + 1;
   }
 
@@ -71,7 +71,7 @@ class Projectile extends Actor {
     GLOBAL.ctx.closePath();
 
     // GLOBAL.ctx.fillRect(this.x, this.y, this.height, this.height);
-    GLOBAL.ctx.rotate(this.rotation);
+    // GLOBAL.ctx.rotate(this.rotation);
 
     //  reset transform values back to normal
     // GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0);
