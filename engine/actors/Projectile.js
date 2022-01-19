@@ -33,19 +33,18 @@ class Projectile extends Actor {
       console.log('GLOBAL rotation: ', this.rotation);
     });
 
-    //  Manually set transform values
+    //  manually set transform values
     GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
 
-    //  Rotate player according to mouse position
     // console.log('projectile.rotation: ', this.rotation);
 
-    // console.log('proj.rotation: ', this.rotation);
-    GLOBAL.ctx.rotate(this.rotation);
+    //  rotate projectile according to mouse position
+    // GLOBAL.ctx.rotate(this.rotation);
 
     GLOBAL.ctx.fillStyle = 'blue';
     GLOBAL.ctx.fillRect(this.x, this.y, this.width, this.height);
 
-    //  Reset transform values back to normal
+    //  reset transform values back to normal
     GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // reset any remaining transform call

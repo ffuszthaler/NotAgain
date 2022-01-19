@@ -78,10 +78,10 @@ class SpriteMap {
     this.width = coords.sourceWidth * this.scale;
     this.height = coords.sourceHeight * this.scale;
 
-    //  Manually set transform values
+    // manually set transform values
     GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
 
-    //  Rotate player according to mouse position
+    // rotate player according to mouse position
     GLOBAL.ctx.rotate(this.rotation);
     GLOBAL.rotation = this.rotation;
 
@@ -93,7 +93,7 @@ class SpriteMap {
     GLOBAL.ctx.lineTo(0, -100);
     GLOBAL.ctx.stroke();
 
-    //  Draw player
+    // draw player
     GLOBAL.ctx.drawImage(
       this.sprites[this.state].image, // src
       coords.sourceX, // source x
@@ -106,7 +106,7 @@ class SpriteMap {
       this.height // dest height
     );
 
-    //  Reset transform values back to normal
+    //  reset transform values back to normal
     GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0);
 
     // if (GLOBAL.mouse.mouseKeys[0] === true) {

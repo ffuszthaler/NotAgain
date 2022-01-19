@@ -11,9 +11,7 @@ import Mouse from '../engine/input/Mouse.js';
 
 import Anton from './anton.js';
 
-// set global values to game specific values
-GLOBAL.widowWidth = 1280;
-GLOBAL.windowHeight = 720;
+// global debug flag for development and testing
 GLOBAL.debug = false;
 
 // game scope
@@ -70,16 +68,16 @@ class notAgain extends Engine {
     this.player = new Anton(this.sprites, this.state, 1, 200, 200);
     this.gameScene.addToScene(this.player);
 
-    // GLOBAL.keyboard = new Keyboard();
     GLOBAL.mouse = new Mouse();
 
     super.continue();
   }
 
   update() {
+    // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
 
-    GLOBAL.mouse.update();
+    console.log(GLOBAL);
 
     GLOBAL.ctx.setTransform(); // reset transform
     GLOBAL.ctx.clearRect(0, 0, 300, 300);
@@ -90,17 +88,24 @@ class notAgain extends Engine {
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GLOBAL.widowWidth, GLOBAL.windowHeight);
 
-    if (GLOBAL.mouse.mouseKeys[0] === true) {
+    let projectileCount = 0;
+
+    // left mouse button
+    if (GLOBAL.mouse.mouseKeys[0] === true && projectileCount <= 1) {
       // let proj = new Projectile(this.player.x, this.player.y - 50, 5, 10);
       let proj = new Projectile(321, 321, 5, 10);
 
       // console.log('projectile-x: ', proj.x);
       // console.log('projectile-y: ', proj.y);
+
       // console.log('projectile: ', proj);
       this.gameScene.addToScene(proj);
       console.log(this.gameScene);
+
+      projectileCount++;
     }
 
+    // render the game scene
     this.gameScene.render();
   }
 }

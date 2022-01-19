@@ -3,7 +3,7 @@ import GLOBAL from './Globals.js';
 class Engine {
   lastTickTimestamp;
 
-  constructor(width = 1280, height = 720) {
+  constructor(width, height) {
     GLOBAL.canvas = document.querySelector('canvas');
     GLOBAL.ctx = GLOBAL.canvas.getContext('2d');
 
