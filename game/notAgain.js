@@ -63,12 +63,19 @@ class notAgain extends Engine {
     super.init();
 
     this.sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
-    this.gameScene.addToScene(this.sprite);
+    // this.gameScene.addToScene(this.sprite);
 
     this.player = new Anton(this.sprites, this.state, 1, 200, 200);
     this.gameScene.addToScene(this.player);
 
     GLOBAL.mouse = new Mouse();
+
+    document.addEventListener('mousedown', () => {
+      let proj = new Projectile(this.player.texture.x + 40, this.player.texture.y, 5, 10);
+
+      this.gameScene.addToScene(proj);
+      console.log(this.gameScene);
+    });
 
     super.continue();
   }
@@ -83,22 +90,21 @@ class notAgain extends Engine {
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GLOBAL.windowWidth, GLOBAL.windowHeight);
 
-    let projectileCount = 0;
-
     // left mouse button
-    if (GLOBAL.mouse.mouseKeys[0] === true && projectileCount <= 1) {
-      // let proj = new Projectile(this.player.x, this.player.y - 50, 5, 10);
-      let proj = new Projectile(321, 321, 5, 10);
+    // if (GLOBAL.mouse.mouseKeys[0] === true) {
+    //   // let proj = new Projectile(this.player.x, this.player.y - 50, 5, 10);
+    //   let proj = new Projectile(this.player.texture.x + 40, this.player.texture.y, 5, 10);
+    //   console.log(this.player.x);
 
-      // console.log('projectile-x: ', proj.x);
-      // console.log('projectile-y: ', proj.y);
+    //   // console.log('projectile-x: ', proj.x);
+    //   // console.log('projectile-y: ', proj.y);
 
-      // console.log('projectile: ', proj);
-      this.gameScene.addToScene(proj);
-      console.log(this.gameScene);
+    //   // console.log('projectile: ', proj);
+    //   this.gameScene.addToScene(proj);
+    //   console.log(this.gameScene);
 
-      projectileCount++;
-    }
+    //   projectileCount++;
+    // }
 
     // render the game scene
     this.gameScene.render();
