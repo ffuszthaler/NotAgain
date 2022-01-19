@@ -8,19 +8,17 @@ class Anton extends Actor {
   constructor(sprites, state, scale, x, y) {
     super(x, y);
 
-    this.x = x;
-    this.y = y;
-
     this.dx = 0;
     this.dy = 0;
 
     this.velocity = 0.3;
 
     this.sprites = sprites;
-
     this.state = state;
-
     this.scale = scale;
+
+    this.x = x;
+    this.y = y;
 
     this.init();
   }

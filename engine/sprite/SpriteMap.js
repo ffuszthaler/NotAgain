@@ -43,6 +43,7 @@ class SpriteMap {
 
       //  Save rotation angle
       this.rotation = Math.atan2(dy, dx) + degToRad(90);
+      GLOBAL.rotation = this.rotation;
 
       // console.log('rotation: ', this.rotation);
     });

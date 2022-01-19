@@ -20,21 +20,6 @@ class Mouse extends InputMethod {
     });
   }
 
-  // rotation() {
-  //   GLOBAL.canvas.addEventListener('mousedown', (e) => {
-  //     //  Calculate rotation angle
-  //     let mouseX = e.offsetX;
-  //     let mouseY = e.offsetY;
-  //     let dx = mouseX - this.x;
-  //     let dy = mouseY - this.y;
-
-  //     //  Save rotation angle
-  //     this.rotation = Math.atan2(dy, dx) + degToRad(90);
-
-  //     console.log('mouse-rotation: ', this.rotation);
-  //   });
-  // }
-
   update() {}
 }
 

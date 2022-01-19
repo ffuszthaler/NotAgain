@@ -64,12 +64,11 @@ class notAgain extends Engine {
   init() {
     super.init();
 
-    // GLOBAL.player = new SpriteMap(sprites, state, 200, 200, 1);
-    this.player = new Anton(this.sprites, this.state, 1, 200, 200);
-    this.gameScene.addToScene(this.player);
-
     this.sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
     this.gameScene.addToScene(this.sprite);
+
+    this.player = new Anton(this.sprites, this.state, 1, 200, 200);
+    this.gameScene.addToScene(this.player);
 
     // GLOBAL.keyboard = new Keyboard();
     GLOBAL.mouse = new Mouse();
@@ -80,7 +79,6 @@ class notAgain extends Engine {
   update() {
     this.gameScene.update(GLOBAL.deltaTime);
 
-    // Anton.update(GLOBAL.deltaTime);
     GLOBAL.mouse.update();
 
     GLOBAL.ctx.setTransform(); // reset transform
@@ -92,14 +90,15 @@ class notAgain extends Engine {
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GLOBAL.widowWidth, GLOBAL.windowHeight);
 
-    // Anton.render();
-
     if (GLOBAL.mouse.mouseKeys[0] === true) {
-      // let proj = new Projectile(GLOBAL.player.x, GLOBAL.player.y - 50, 5, 10);
+      // let proj = new Projectile(this.player.x, this.player.y - 50, 5, 10);
       let proj = new Projectile(321, 321, 5, 10);
-      console.log('projectile-x: ', proj.x);
-      console.log('projectile-y: ', proj.y);
+
+      // console.log('projectile-x: ', proj.x);
+      // console.log('projectile-y: ', proj.y);
+      // console.log('projectile: ', proj);
       this.gameScene.addToScene(proj);
+      console.log(this.gameScene);
     }
 
     this.gameScene.render();

@@ -7,6 +7,12 @@ class Projectile extends Actor {
   constructor(x, y, width, height) {
     super(x, y, width, height);
 
+    this.x = x;
+    this.y = y;
+
+    this.width;
+    this.height;
+
     this.rotation;
 
     this.init();
@@ -23,15 +29,15 @@ class Projectile extends Actor {
       //  Save rotation angle
       this.rotation = Math.atan2(dy, dx) + degToRad(90);
 
-      // console.log('rotation: ', this.rotation);
+      // console.log('projectile rotation: ', this.rotation);
+      console.log('GLOBAL rotation: ', this.rotation);
     });
 
     //  Manually set transform values
     GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
 
     //  Rotate player according to mouse position
-    // console.log('GLOBAL.rotation: ', GLOBAL.rotation);
-    // GLOBAL.ctx.rotate(GLOBAL.rotation);
+    // console.log('projectile.rotation: ', this.rotation);
 
     // console.log('proj.rotation: ', this.rotation);
     GLOBAL.ctx.rotate(this.rotation);
@@ -52,7 +58,7 @@ class Projectile extends Actor {
     super.render();
 
     // reset any remaining transform call
-    GLOBAL.ctx.resetTransform();
+    // GLOBAL.ctx.resetTransform();
   }
 }
 
