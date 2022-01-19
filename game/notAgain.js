@@ -76,17 +76,12 @@ class notAgain extends Engine {
   update() {
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
-
-    console.log(GLOBAL);
-
-    GLOBAL.ctx.setTransform(); // reset transform
-    GLOBAL.ctx.clearRect(0, 0, 300, 300);
   }
 
   render() {
     // clear canvas before drawing
     GLOBAL.ctx.resetTransform();
-    GLOBAL.ctx.clearRect(0, 0, GLOBAL.widowWidth, GLOBAL.windowHeight);
+    GLOBAL.ctx.clearRect(0, 0, GLOBAL.windowWidth, GLOBAL.windowHeight);
 
     let projectileCount = 0;
 

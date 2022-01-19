@@ -52,8 +52,8 @@ class Anton extends Actor {
 
     // bounds detection
     // right
-    if (this.texture.x + this.texture.width / 2 > GLOBAL.widowWidth)
-      this.texture.x = GLOBAL.widowWidth - this.texture.width / 2;
+    if (this.texture.x + this.texture.width / 2 > GLOBAL.windowWidth)
+      this.texture.x = GLOBAL.windowWidth - this.texture.width / 2;
     // left
     else if (this.texture.x - this.texture.width / 2 < 0) this.texture.x = 0 + this.texture.width / 2;
 
