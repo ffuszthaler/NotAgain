@@ -10,6 +10,7 @@ import Keyboard from '../engine/input/Keyboard.js';
 import Mouse from '../engine/input/Mouse.js';
 
 import Player from './Player.js';
+import Enemy from './Enemy.js';
 
 // global debug flag for development and testing
 GLOBAL.debug = false;
@@ -65,8 +66,13 @@ class notAgain extends Engine {
     this.sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
     // this.gameScene.addToScene(this.sprite);
 
+    // create player
     this.player = new Player(this.sprites, this.state, 1, 200, 200);
     this.gameScene.addToScene(this.player);
+
+    // create a test enemy
+    this.enemy1 = new Enemy(this.sprites, this.state, 1, 400, 400);
+    this.gameScene.addToScene(this.enemy1);
 
     GLOBAL.mouse = new Mouse();
 
@@ -76,7 +82,6 @@ class notAgain extends Engine {
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
         let proj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
-        // console.log('projectile - ', proj.getBoundingBox());
 
         // check for collisions between player and his own bullets
         // fires every time bc bullet get spawned inside of player
@@ -91,7 +96,6 @@ class notAgain extends Engine {
   }
 
   update() {
-    // console.log('player - ', this.player.getBoundingBox());
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
   }
