@@ -24,16 +24,12 @@ class Anton extends Actor {
   }
 
   init() {
-    // super.init();
-
     this.texture = new SpriteMap(this.sprites, this.state, this.x, this.y, this.scale);
 
     this.keyboard = new Keyboard();
   }
 
   update(deltaTime) {
-    // super.update();
-
     this.keyboard.keyPressed('KeyW', (isPressed, currentKeys) => {
       if (!currentKeys['KeyS']) this.dy = isPressed ? -1 : 0;
     });
