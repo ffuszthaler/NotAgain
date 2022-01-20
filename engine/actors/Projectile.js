@@ -63,6 +63,16 @@ class Projectile extends Actor {
     GLOBAL.ctx.fill();
     GLOBAL.ctx.closePath();
   }
+
+  // get bounding box values for projectiles
+  getBoundingBox() {
+    return {
+      x: this.projPos.x - this.radius / 2,
+      y: this.projPos.y - this.radius / 2,
+      w: this.radius,
+      h: this.radius,
+    };
+  }
 }
 
 export default Projectile;

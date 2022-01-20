@@ -82,6 +82,16 @@ class Anton extends Actor {
 
     this.texture.render();
   }
+
+  // get bounding box values for player
+  getBoundingBox() {
+    return {
+      x: this.texture.x - this.texture.width / 2,
+      y: this.texture.y - this.texture.height / 2,
+      w: this.texture.width,
+      h: this.texture.height,
+    };
+  }
 }
 
 export default Anton;

@@ -1,5 +1,14 @@
 import GLOBAL from './Globals.js';
 
+// checks if a collision happened between two objects
+export let checkCollisionBetween = (gameObjectA, gameObjectB) => {
+  let bbA = gameObjectA.getBoundingBox();
+  let bbB = gameObjectB.getBoundingBox();
+  if (bbA.x < bbB.x + bbB.w && bbA.x + bbA.w > bbB.x && bbA.y < bbB.y + bbB.h && bbA.y + bbA.h > bbB.y) {
+    return true;
+  } else return false;
+};
+
 class Engine {
   lastTickTimestamp;
 

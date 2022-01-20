@@ -1,5 +1,5 @@
 import GLOBAL from '../engine/Globals.js';
-import Engine from '../engine/Engine.js';
+import Engine, { checkCollisionBetween } from '../engine/Engine.js';
 
 import Scene from '../engine/Scene.js';
 // import SpriteMap from '../engine/sprite/SpriteMap.js';
@@ -70,10 +70,19 @@ class notAgain extends Engine {
 
     GLOBAL.mouse = new Mouse();
 
-    // left mouse button
+    let proj;
+
+    // left mouse button to shoot a bullet as the player
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
         let proj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
+        // console.log('projectile - ', proj.getBoundingBox());
+
+        // check for collisions between player and his own bullets
+        // fires every time bc bullet get spawned inside of player
+        if (checkCollisionBetween(this.player, proj)) {
+          console.log('COLLISION!!!!!!!!!!!!!!');
+        }
         this.gameScene.addToScene(proj);
       }
     });
@@ -82,6 +91,7 @@ class notAgain extends Engine {
   }
 
   update() {
+    // console.log('player - ', this.player.getBoundingBox());
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
   }

@@ -26,14 +26,14 @@ class Actor {
     }
   }
 
-  getBoundingBox() {
-    return {
-      x: this.x - this.width / 2,
-      y: this.y - this.height / 2,
-      w: this.width,
-      h: this.height,
-    };
-  }
+  // getBoundingBox() {
+  //   return {
+  //     x: this.x - this.width / 2,
+  //     y: this.y - this.height / 2,
+  //     w: this.width,
+  //     h: this.height,
+  //   };
+  // }
 }
 
 export default Actor;
