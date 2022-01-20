@@ -7,11 +7,33 @@ class Projectile extends Actor {
   constructor(x, y, width, height) {
     super(x, y, width, height);
 
-    this.x = x;
-    this.y = y;
+    // this.x = x;
+    // this.y = y;
 
+    // projectile position vector
+    this.projPos = {
+      x: x,
+      y: y,
+    };
+
+    // size of projectile
     this.width = width;
     this.height = height;
+
+    // velocity
+    this.rotVel = {
+      x: 0,
+      y: 0,
+    };
+
+    // mouse cursor position
+    this.mousePos = {
+      x,
+      y,
+    };
+
+    this.dx;
+    this.dy;
 
     this.rotation;
 
@@ -20,19 +42,35 @@ class Projectile extends Actor {
 
   init() {
     GLOBAL.canvas.addEventListener('mousedown', (e) => {
-      //  Calculate rotation angle
-      let mouseX = e.offsetX;
-      let mouseY = e.offsetY;
-      let dx = mouseX - this.x;
-      let dy = mouseY - this.y;
+      //  calculate rotation angle
+      this.mousePos.x = e.offsetX;
+      this.mousePos.y = e.offsetY;
 
-      //  Save rotation angle
+      // let mouseX = e.clientX;
+      // let mouseY = e.clientY;
+
+      // distance between mouse and projectile
+      this.dx = this.mousePos.x - this.projPos.x;
+      this.dy = this.mousePos.y - this.projPos.y;
+
+      //  save rotation angle
       // this.rotation = Math.atan2(dy, dx) + degToRad(90);
-      this.rotation = Math.atan2(dy, dx);
+      this.rotation = Math.atan2(this.dy, this.dx);
 
       // console.log('projectile rotation: ', this.rotation);
       console.log('GLOBAL rotation: ', this.rotation);
+
+      // Theta
+      this.opp = Math.floor(GLOBAL.canvas.height - e.clientY);
+      this.adj = Math.floor(e.clientX);
+      this.hyp = Math.floor(Math.sqrt(this.mousePos.x * this.mousePos.y + this.adj * this.adj));
+
+      console.log('theta-degrees: ', this.thetaDegrees);
     });
+
+    // this.rotVel.x = this.projPos.x * Math.cos(this.rotation) - this.projPos.y * Math.sin(this.rotation);
+    // this.rotVel.y = this.projPos.x * Math.sin(this.rotation) + this.projPos.y * Math.cos(this.rotation);
+    // console.log('rot vel ', this.rotVel);
 
     //  manually set transform values
     // GLOBAL.ctx.setTransform(1, 0, 0, 1, this.x, this.y);
@@ -53,8 +91,14 @@ class Projectile extends Actor {
   }
 
   update() {
-    this.x = this.x + 2;
-    // this.y = this.y + 1;
+    // mouse position vector - projectile starting point vector
+    // this.projPos.x += 2;
+    // this.projPos.y += 2;
+
+    this.projPos.x += this.mousePos.x - this.projPos.x;
+    this.projPos.y += this.mousePos.y - this.projPos.y;
+
+    // console.log(this.projPos);
   }
 
   render() {
@@ -65,7 +109,7 @@ class Projectile extends Actor {
 
     // NOTE: make projectile round
     GLOBAL.ctx.beginPath();
-    GLOBAL.ctx.arc(this.x, this.y, 4, 0, 2 * Math.PI);
+    GLOBAL.ctx.arc(this.projPos.x, this.projPos.y, 4, 0, 2 * Math.PI);
     GLOBAL.ctx.fillStyle = '#000000';
     GLOBAL.ctx.fill();
     GLOBAL.ctx.closePath();

@@ -70,12 +70,15 @@ class notAgain extends Engine {
 
     GLOBAL.mouse = new Mouse();
 
+    // left mouse button
     document.addEventListener('mousedown', (e) => {
-      let proj = new Projectile(this.player.texture.x + 40, this.player.texture.y, 5, 10);
-      // let proj = new Projectile(e.offsetX - 310, e.offsetY, 5, 10);
+      if (e.button === 0) {
+        let proj = new Projectile(this.player.texture.x + 40, this.player.texture.y, 5, 10);
+        // let proj = new Projectile(e.offsetX - 310, e.offsetY, 5, 10);
 
-      this.gameScene.addToScene(proj);
-      console.log(this.gameScene);
+        this.gameScene.addToScene(proj);
+        console.log(this.gameScene);
+      }
     });
 
     super.continue();
@@ -90,22 +93,6 @@ class notAgain extends Engine {
     // clear canvas before drawing
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GLOBAL.windowWidth, GLOBAL.windowHeight);
-
-    // left mouse button
-    // if (GLOBAL.mouse.mouseKeys[0] === true) {
-    //   // let proj = new Projectile(this.player.x, this.player.y - 50, 5, 10);
-    //   let proj = new Projectile(this.player.texture.x + 40, this.player.texture.y, 5, 10);
-    //   console.log(this.player.x);
-
-    //   // console.log('projectile-x: ', proj.x);
-    //   // console.log('projectile-y: ', proj.y);
-
-    //   // console.log('projectile: ', proj);
-    //   this.gameScene.addToScene(proj);
-    //   console.log(this.gameScene);
-
-    //   projectileCount++;
-    // }
 
     // render the game scene
     this.gameScene.render();
