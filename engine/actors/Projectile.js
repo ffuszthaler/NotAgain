@@ -48,11 +48,14 @@ class Projectile extends Actor {
       y: this.mousePos.y - this.projPos.y,
     };
 
+    // calculate distance
     let dist = Math.sqrt(this.direction.x ** 2 + this.direction.y ** 2);
 
+    // make things move
     this.direction.x = this.direction.x / dist;
     this.direction.y = this.direction.y / dist;
 
+    // 40 pixel offset at start
     this.projPos.x += this.direction.x * 40;
     this.projPos.y += this.direction.y * 40;
   }
