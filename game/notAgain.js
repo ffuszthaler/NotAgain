@@ -9,7 +9,7 @@ import Projectile from '../engine/actors/Projectile.js';
 import Keyboard from '../engine/input/Keyboard.js';
 import Mouse from '../engine/input/Mouse.js';
 
-import Anton from './anton.js';
+import Anton from './Player.js';
 
 // global debug flag for development and testing
 GLOBAL.debug = false;
