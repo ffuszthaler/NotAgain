@@ -11,6 +11,12 @@ class Projectile extends Actor {
       y: y,
     };
 
+    // mouse cursor position
+    this.mousePos = {
+      x: mouseX,
+      y: mouseY,
+    };
+
     // size of projectile
     this.radius = radius;
 
@@ -20,28 +26,11 @@ class Projectile extends Actor {
       y: 0,
     };
 
-    // mouse cursor position
-    this.mousePos = {
-      x: mouseX,
-      y: mouseY,
-    };
-
-    this.dx;
-    this.dy;
-
-    this.rotation;
-
+    // has to be here, because of context reasons
     this.init();
   }
 
   init() {
-    // distance between mouse and projectile
-    this.dx = this.mousePos.x - this.projPos.x;
-    this.dy = this.mousePos.y - this.projPos.y;
-
-    //  save rotation angle
-    this.rotation = Math.atan2(this.dy, this.dx);
-
     // direction vector
     this.direction = {
       x: this.mousePos.x - this.projPos.x,
@@ -61,6 +50,7 @@ class Projectile extends Actor {
   }
 
   update() {
+    // update based on direction and GLOBAL.deltaTime
     this.projPos.x += this.direction.x * GLOBAL.deltaTime * 1;
     this.projPos.y += this.direction.y * GLOBAL.deltaTime * 1;
   }
