@@ -12,9 +12,6 @@ class Projectile extends Actor {
     };
 
     // size of projectile
-    // this.width = width;
-    // this.height = height;
-
     this.radius = radius;
 
     // velocity
