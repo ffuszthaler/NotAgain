@@ -73,11 +73,8 @@ class notAgain extends Engine {
     // left mouse button
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
-        let proj = new Projectile(this.player.texture.x + 40, this.player.texture.y, 5, 10);
-        // let proj = new Projectile(e.offsetX - 310, e.offsetY, 5, 10);
-
+        let proj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
         this.gameScene.addToScene(proj);
-        console.log(this.gameScene);
       }
     });
 
