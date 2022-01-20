@@ -17,13 +17,13 @@ class Actor {
   update(deltaTime) {}
 
   render() {
-    // draw bounding box rectangle if debug flag is set
-    if (GLOBAL.debug) {
-      let bb = this.getBoundingBox();
-      GLOBAL.ctx.translate(bb.x, bb.y);
-      GLOBAL.ctx.strokeRect(0, 0, bb.w, bb.h);
-      GLOBAL.ctx.resetTransform();
-    }
+    // // draw bounding box rectangle if debug flag is set
+    // if (GLOBAL.debug) {
+    //   let bb = this.getBoundingBox();
+    //   GLOBAL.ctx.translate(bb.x, bb.y);
+    //   GLOBAL.ctx.strokeRect(0, 0, bb.w, bb.h);
+    //   GLOBAL.ctx.resetTransform();
+    // }
   }
 
   // getBoundingBox() {
