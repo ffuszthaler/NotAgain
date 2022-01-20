@@ -9,7 +9,7 @@ import Projectile from '../engine/actors/Projectile.js';
 import Keyboard from '../engine/input/Keyboard.js';
 import Mouse from '../engine/input/Mouse.js';
 
-import Anton from './Player.js';
+import Player from './Player.js';
 
 // global debug flag for development and testing
 GLOBAL.debug = false;
@@ -65,7 +65,7 @@ class notAgain extends Engine {
     this.sprite = new Sprite('./assets/mouse.png', 150, 100, 0.1);
     // this.gameScene.addToScene(this.sprite);
 
-    this.player = new Anton(this.sprites, this.state, 1, 200, 200);
+    this.player = new Player(this.sprites, this.state, 1, 200, 200);
     this.gameScene.addToScene(this.player);
 
     GLOBAL.mouse = new Mouse();

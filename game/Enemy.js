@@ -2,9 +2,8 @@ import GLOBAL from '../engine/Globals.js';
 
 import SpriteMap from '../engine/sprite/SpriteMap.js';
 import Actor from '../engine/actors/Actor.js';
-import Keyboard from '../engine/input/Keyboard.js';
 
-class Player extends Actor {
+class Enemy extends Actor {
   constructor(sprites, state, scale, x, y) {
     super(x, y);
 
@@ -25,27 +24,9 @@ class Player extends Actor {
 
   init() {
     this.texture = new SpriteMap(this.sprites, this.state, this.x, this.y, this.scale);
-
-    this.keyboard = new Keyboard();
   }
 
   update(deltaTime) {
-    this.keyboard.keyPressed('KeyW', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyS']) this.dy = isPressed ? -1 : 0;
-    });
-
-    this.keyboard.keyPressed('KeyA', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyD']) this.dx = isPressed ? -1 : 0;
-    });
-
-    this.keyboard.keyPressed('KeyS', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyW']) this.dy = isPressed ? 1 : 0;
-    });
-
-    this.keyboard.keyPressed('KeyD', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyA']) this.dx = isPressed ? 1 : 0;
-    });
-
     // bounds detection
     // right
     if (this.texture.x + this.texture.width / 2 > GLOBAL.windowWidth)
@@ -90,4 +71,4 @@ class Player extends Actor {
   }
 }
 
-export default Player;
+export default Enemy;
