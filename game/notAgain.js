@@ -96,7 +96,7 @@ class notAgain extends Engine {
       randomNumberBetween(0, GLOBAL.windowWidth),
       randomNumberBetween(0, GLOBAL.windowHeight)
     );
-    this.gameScene.addToScene(this.enemy2);
+    // this.gameScene.addToScene(this.enemy2);
 
     // left mouse button to shoot a bullet as the player
     document.addEventListener('mousedown', (e) => {
@@ -141,6 +141,7 @@ class notAgain extends Engine {
 
     projToDel.forEach((proj) => {
       this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
+      this.gameScene.removeFromScene(proj);
     });
 
     console.log(this.playerProjectiles);
