@@ -1,10 +1,10 @@
 import GLOBAL from '../engine/Globals.js';
 
-import SpriteMap from '../engine/sprite/SpriteMap.js';
 import Actor from '../engine/actors/Actor.js';
+import SpriteMap from '../engine/sprite/SpriteMap.js';
 
 class Enemy extends Actor {
-  constructor(sprites, state, scale, x, y) {
+  constructor(sprites, state, scale, x, y, rotCenterX, rotCenterY) {
     super(x, y);
 
     this.dx = 0;
@@ -19,11 +19,22 @@ class Enemy extends Actor {
     this.x = x;
     this.y = y;
 
+    this.rotCenterX = rotCenterX;
+    this.rotCenterY = rotCenterY;
+
     this.init();
   }
 
   init() {
-    this.texture = new SpriteMap(this.sprites, this.state, this.x, this.y, this.scale);
+    this.texture = new SpriteMap(
+      this.sprites,
+      this.state,
+      this.x,
+      this.y,
+      this.scale,
+      this.rotCenterX,
+      this.rotCenterY
+    );
   }
 
   update(deltaTime) {
@@ -50,8 +61,10 @@ class Enemy extends Actor {
     // sprite hack bc i dont have a running cycle rn
     this.texture.state = this.dx === 0 && this.dy === 0 ? 'anton' : 'anton';
 
-    this.texture.x += deltaTime * this.dx * this.velocity;
-    this.texture.y += deltaTime * this.dy * this.velocity;
+    // this.texture.x += deltaTime * this.dx * this.velocity;
+    // this.texture.y += deltaTime * this.dy * this.velocity;
+
+    // add the shooting at player mechanic here
   }
 
   render() {

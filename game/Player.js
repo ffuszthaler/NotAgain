@@ -5,7 +5,7 @@ import Actor from '../engine/actors/Actor.js';
 import Keyboard from '../engine/input/Keyboard.js';
 
 class Player extends Actor {
-  constructor(sprites, state, scale, x, y) {
+  constructor(sprites, state, scale, x, y, rotCenterX, rotCenterY) {
     super(x, y);
 
     this.dx = 0;
@@ -20,11 +20,24 @@ class Player extends Actor {
     this.x = x;
     this.y = y;
 
+    this.rotCenterX = rotCenterX;
+    this.rotCenterY = rotCenterY;
+
+    this.health = 3;
+
     this.init();
   }
 
   init() {
-    this.texture = new SpriteMap(this.sprites, this.state, this.x, this.y, this.scale);
+    this.texture = new SpriteMap(
+      this.sprites,
+      this.state,
+      this.x,
+      this.y,
+      this.scale,
+      this.rotCenterX,
+      this.rotCenterY
+    );
 
     this.keyboard = new Keyboard();
   }

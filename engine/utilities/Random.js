@@ -26,6 +26,6 @@ class Random {
   }
 }
 
-export default RandomDispatcher;
+export default Random;
 
 export { randomNumberBetween };

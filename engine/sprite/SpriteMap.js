@@ -1,12 +1,10 @@
-// Utility classes to load sprite sheets
-
+// Utility classes to load and animate sprite sheets
 import GLOBAL from '../Globals.js';
-import Projectile from '../actors/Projectile.js';
 
 import { degToRad } from '../utilities/Math.js';
 
 class SpriteMap {
-  constructor(sprites, state, x, y, scale) {
+  constructor(sprites, state, x, y, scale, rotCenterX, rotCenterY) {
     this.sprites = sprites;
 
     this.state = state;
@@ -18,6 +16,9 @@ class SpriteMap {
     this.y = y;
 
     this.scale = scale;
+
+    this.rotCenterX = rotCenterX;
+    this.rotCenterY = rotCenterY;
 
     this.lastDirection;
 
@@ -36,16 +37,17 @@ class SpriteMap {
     // calculate mouse rotation
     GLOBAL.canvas.addEventListener('mousemove', (e) => {
       //  Calculate rotation angle
-      let mouseX = e.offsetX;
-      let mouseY = e.offsetY;
-      let dx = mouseX - this.x;
-      let dy = mouseY - this.y;
+      // let targetX = e.offsetX;
+      // let targetY = e.offsetY;
+
+      let targetX = this.rotCenterX;
+      let targetY = this.rotCenterY;
+
+      let dx = targetX - this.x;
+      let dy = targetY - this.y;
 
       //  Save rotation angle
       this.rotation = Math.atan2(dy, dx) + degToRad(90);
-      // GLOBAL.rotation = this.rotation;
-
-      // console.log('rotation: ', this.rotation);
     });
   }
 
@@ -83,7 +85,6 @@ class SpriteMap {
 
     // rotate player according to mouse position
     GLOBAL.ctx.rotate(this.rotation);
-    GLOBAL.rotation = this.rotation;
 
     // red debug line
     GLOBAL.ctx.strokeStyle = 'red';
@@ -108,11 +109,6 @@ class SpriteMap {
 
     //  reset transform values back to normal
     GLOBAL.ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-    // if (GLOBAL.mouse.mouseKeys[0] === true) {
-    //   let proj = new Projectile(0, 0, 5, 10);
-    //   proj.render();
-    // }
 
     // reset any remaining transform call
     GLOBAL.ctx.resetTransform();
