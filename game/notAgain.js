@@ -129,7 +129,8 @@ class notAgain extends Engine {
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
 
-    // check of player projectile has hit a player and delete it afterwards
+    // check of player projectile has hit enemy1
+    // and if it did delete it afterwards
     let projToDel = [];
 
     this.playerProjectiles.forEach((proj) => {
