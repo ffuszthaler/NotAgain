@@ -8,6 +8,7 @@
 
 - Ricochet Bullets
 - Drag on certain grounds
+- Decelerating bullets (air resistance), decreasing value = air resistance = bullet velocity
 
 </br>
 
@@ -15,3 +16,4 @@
 
 - add bool flag to mouse rotation mechanic in SpriteMap.js, so it can be turned off for enemies
 - collision detection between all enemies and player (bullet hit detection)
+- make enemies look almost the same but have a dark red be the dominant clothing color

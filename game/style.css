@@ -1,16 +1,13 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(45deg, #e66465, #9198e5);
+  background: linear-gradient(315deg, rgba(48, 43, 21, 1) 0%, rgba(126, 118, 71, 1) 100%);
   margin: 0;
 }
 
 canvas {
-  /* light mode */
-  background-color: white;
-  /* dark mode */
-  /* background-color: #333; */
-  /* background-image: url('./assets/background.png'); */
+  background-image: url('./assets/background.png');
   border-radius: 0.5rem;
+  filter: drop-shadow(30px 30px 30px rgba(48, 43, 21, 1));
 }
 
 #wrapper {
