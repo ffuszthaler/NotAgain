@@ -48,43 +48,66 @@ class notAgain extends Engine {
       },
       image: null,
     },
+    enemy: {
+      src: './assets/enemy.png',
+      frames: 1,
+      fps: 1,
+      frameSize: {
+        width: 128,
+        height: 128,
+      },
+      image: null,
+    },
   };
 
   // animation sprite state
-  state = 'anton';
+  playerState = 'anton';
+  enemyState = 'enemy';
+
   player;
   enemy1;
+  enemy2;
+
+  // contains player projectiles
+  playerProjectiles = [];
 
   init() {
     super.init();
 
     // create player
-    // maybe put this (not the add to scene line) also in mousemove event and send the e.offset data as parameters
-    // would allow you to choose where the character (player, enemies) looks and shoots at.
-    this.player = new Player(this.sprites, this.state, 1, 200, 200);
+    this.player = new Player(this.sprites, this.playerState, 1, 200, 200);
     this.gameScene.addToScene(this.player);
 
-    // create a test enemy
+    // test enemy 1
     this.enemy1 = new Enemy(
       this.sprites,
-      this.state,
+      this.enemyState,
       1,
       randomNumberBetween(0, GLOBAL.windowWidth),
       randomNumberBetween(0, GLOBAL.windowHeight)
     );
     this.gameScene.addToScene(this.enemy1);
 
+    // test enemy 2
+    this.enemy2 = new Enemy(
+      this.sprites,
+      this.enemyState,
+      1,
+      randomNumberBetween(0, GLOBAL.windowWidth),
+      randomNumberBetween(0, GLOBAL.windowHeight)
+    );
+    this.gameScene.addToScene(this.enemy2);
+
     // left mouse button to shoot a bullet as the player
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
         let playerProj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
-        this.gameScene.addToScene(playerProj);
-        // check for collisions between player and his own bullets
-        // fires every time bc bullet get spawned inside of player
 
-        if (checkCollisionBetween(this.player, playerProj)) {
-          console.log('COLLISION!!!!!!!!!!!!!!');
-        }
+        // add to scene
+        this.gameScene.addToScene(playerProj);
+
+        // add to player projectile array, to be deleted
+        this.playerProjectiles.push(playerProj);
       }
     });
 
@@ -100,17 +123,33 @@ class notAgain extends Engine {
     this.enemy1.texture.rotCenterX = this.player.texture.x;
     this.enemy1.texture.rotCenterY = this.player.texture.y;
 
+    this.enemy2.texture.rotCenterX = this.player.texture.x;
+    this.enemy2.texture.rotCenterY = this.player.texture.y;
+
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
+
+    // check of player projectile has hit a player and delete it afterwards
+    let projToDel = [];
+
+    this.playerProjectiles.forEach((proj) => {
+      if (checkCollisionBetween(proj, this.enemy1)) {
+        projToDel.push(proj);
+        console.log('col');
+      }
+    });
+
+    projToDel.forEach((proj) => {
+      this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
+    });
+
+    console.log(this.playerProjectiles);
   }
 
   render() {
     // clear canvas before drawing
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GLOBAL.windowWidth, GLOBAL.windowHeight);
-
-    // this.enemy1.rotCenterX = this.player.texture.x;
-    // this.enemy1.rotCenterY = this.player.texture.y;
 
     // render the game scene
     this.gameScene.render();
