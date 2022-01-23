@@ -49,7 +49,7 @@ class notAgain extends Engine {
       image: null,
     },
     enemy: {
-      src: './assets/enemy.png',
+      src: './assets/enemy_still.png',
       frames: 1,
       fps: 1,
       frameSize: {

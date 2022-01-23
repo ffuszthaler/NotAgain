@@ -86,13 +86,13 @@ class SpriteMap {
     // rotate player according to mouse position
     GLOBAL.ctx.rotate(this.rotation);
 
-    // red debug line
-    GLOBAL.ctx.strokeStyle = 'red';
-    GLOBAL.ctx.stroke();
-    GLOBAL.ctx.beginPath();
-    GLOBAL.ctx.moveTo(0, -20);
-    GLOBAL.ctx.lineTo(0, -100);
-    GLOBAL.ctx.stroke();
+    // debug line to show rotation of game character
+    // GLOBAL.ctx.strokeStyle = 'red';
+    // GLOBAL.ctx.stroke();
+    // GLOBAL.ctx.beginPath();
+    // GLOBAL.ctx.moveTo(0, -20);
+    // GLOBAL.ctx.lineTo(0, -100);
+    // GLOBAL.ctx.stroke();
 
     // draw player
     GLOBAL.ctx.drawImage(
