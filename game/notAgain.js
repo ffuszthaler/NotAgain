@@ -18,27 +18,7 @@ class notAgain extends Engine {
 
   // animation sprites
   sprites = {
-    run: {
-      src: './assets/run-sprite.png',
-      frames: 8,
-      fps: 20,
-      frameSize: {
-        width: 400,
-        height: 400,
-      },
-      image: null,
-    },
-    idle: {
-      src: './assets/idle-sprite.png',
-      frames: 10,
-      fps: 20,
-      frameSize: {
-        width: 400,
-        height: 400,
-      },
-      image: null,
-    },
-    anton: {
+    anton_idle: {
       src: './assets/anton_still.png',
       frames: 1,
       fps: 1,
@@ -48,7 +28,18 @@ class notAgain extends Engine {
       },
       image: null,
     },
-    enemy: {
+
+    anton_walk: {
+      src: './assets/anton_walk.png',
+      frames: 2,
+      fps: 5,
+      frameSize: {
+        width: 128,
+        height: 128,
+      },
+      image: null,
+    },
+    enemy_idle: {
       src: './assets/enemy_still.png',
       frames: 1,
       fps: 1,
@@ -61,8 +52,8 @@ class notAgain extends Engine {
   };
 
   // animation sprite state
-  playerState = 'anton';
-  enemyState = 'enemy';
+  playerState = 'anton_idle';
+  enemyState = 'enemy_idle';
 
   player;
   enemy1;

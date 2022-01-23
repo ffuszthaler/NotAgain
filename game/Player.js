@@ -80,7 +80,7 @@ class Player extends Actor {
 
     // GLOBAL.player.state = dx === 0 && dy === 0 ? 'idle' : 'run';
     // sprite hack bc i dont have a running cycle rn
-    this.texture.state = this.dx === 0 && this.dy === 0 ? 'anton' : 'anton';
+    this.texture.state = this.dx === 0 && this.dy === 0 ? 'anton_idle' : 'anton_walk';
 
     this.texture.x += deltaTime * this.dx * this.velocity;
     this.texture.y += deltaTime * this.dy * this.velocity;
