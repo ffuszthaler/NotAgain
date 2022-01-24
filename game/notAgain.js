@@ -75,26 +75,6 @@ class notAgain extends Engine {
     this.player = new Player(this.sprites, this.playerState, 1, 200, 200);
     this.gameScene.addToScene(this.player);
 
-    // test enemy 1
-    this.enemy1 = new Enemy(
-      this.sprites,
-      this.enemyState,
-      1,
-      randomNumberBetween(0, GLOBAL.windowWidth),
-      randomNumberBetween(0, GLOBAL.windowHeight)
-    );
-    // this.gameScene.addToScene(this.enemy1);
-
-    // test enemy 2
-    this.enemy2 = new Enemy(
-      this.sprites,
-      this.enemyState,
-      1,
-      randomNumberBetween(0, GLOBAL.windowWidth),
-      randomNumberBetween(0, GLOBAL.windowHeight)
-    );
-    // this.gameScene.addToScene(this.enemy2);
-
     // left mouse button to shoot a bullet as the player
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
@@ -108,7 +88,29 @@ class notAgain extends Engine {
       }
     });
 
+    // time iteration which run every 10 seconds
+    setInterval(() => {
+      this.createIteration();
+    }, 10000);
+
     super.continue();
+  }
+
+  createIteration() {
+    let enemy = new Enemy(
+      this.sprites,
+      this.enemyState,
+      1,
+      randomNumberBetween(0, GLOBAL.windowWidth),
+      randomNumberBetween(0, GLOBAL.windowHeight)
+    );
+    // push newly created enemies into array
+    this.enemies.push(enemy);
+    this.gameScene.addToScene(enemy);
+
+    // console.log(this.enemies);
+
+    // execute its methods for every enemy inside array
   }
 
   update() {
@@ -117,85 +119,7 @@ class notAgain extends Engine {
       this.player.texture.rotCenterY = e.offsetY;
     });
 
-    // update enemy rotation towards new player position
-    // this.enemy1.texture.rotCenterX = this.player.texture.x;
-    // this.enemy1.texture.rotCenterY = this.player.texture.y;
-
-    // have the enemy shoot at the player
-    // this.enemy1.shoot(this.enemy1.texture.x, this.enemy1.texture.y, this.player.texture.x, this.player.texture.y);
-    // this.enemyProjectiles.push(this.enemy1.enemyProj);
-    // this.gameScene.addToScene(this.enemy1.enemyProj);
-
-    // check of player projectile has hit enemy
-    // and if it did, delete it afterwards
-    // let playerProjToDel = [];
-    // this.playerProjectiles.forEach((proj) => {
-    //   if (checkCollisionBetween(proj, this.enemy1)) {
-    //     playerProjToDel.push(proj);
-    //     console.log('col - player -> enemy');
-
-    //     this.enemy1.health--;
-    //     if (this.enemy1.health === 0) {
-    //       console.log('enemy died');
-
-    //       this.points++;
-
-    //       console.log('score: ', this.points);
-    //     }
-    //   }
-    // });
-
-    // delete player projectile that hit enemies
-    // playerProjToDel.forEach((proj) => {
-    //   this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
-    //   this.gameScene.removeFromScene(proj);
-    // });
-
-    // check if enemy projectile has hit player
-    // and if it did, delete it afterwards
-    // let enemyProjToDel = [];
-    // this.enemyProjectiles.forEach((proj) => {
-    //   if (checkCollisionBetween(proj, this.player)) {
-    //     enemyProjToDel.push(proj);
-    //     console.log('col - enemy -> player');
-
-    //     this.player.health--;
-    //     if (this.player.health === 0) {
-    //       console.log('player died');
-    //     }
-    //   }
-    // });
-
-    // delete enemy projectile that hit the player
-    // enemyProjToDel.forEach((proj) => {
-    //   this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
-    //   this.gameScene.removeFromScene(proj);
-    // });
-
-    // time iteration which run every 10 seconds
-    this.iterationStartTimer += GLOBAL.deltaTime;
-    if (this.iterationStartTimer >= 10000) {
-      // push newly created enemies into array
-      this.enemies.push(
-        new Enemy(
-          this.sprites,
-          this.enemyState,
-          1,
-          randomNumberBetween(0, GLOBAL.windowWidth),
-          randomNumberBetween(0, GLOBAL.windowHeight)
-        )
-      );
-
-      console.log(this.enemies);
-
-      // reset timer
-      this.iterationStartTimer = 0;
-    }
-
-    // execute its methods for every enemy inside array
     for (let i = 0; i < this.enemies.length; i++) {
-      this.gameScene.addToScene(this.enemies[i]);
-
       // rotate enemies towards player position
       this.enemies[i].texture.rotCenterX = this.player.texture.x;
       this.enemies[i].texture.rotCenterY = this.player.texture.y;
@@ -208,6 +132,8 @@ class notAgain extends Engine {
       );
       this.enemyProjectiles.push(this.enemies[i].enemyProj);
       this.gameScene.addToScene(this.enemies[i].enemyProj);
+
+      // may be related to the changing position of the player, and the creation of projectiles when moving (values update inside the update loop (high fps))
 
       // player -> enemy
       // & delete player projectile that hit enemies
@@ -238,7 +164,7 @@ class notAgain extends Engine {
       this.enemyProjectiles.forEach((proj) => {
         if (checkCollisionBetween(proj, this.player)) {
           enemyProjToDel.push(proj);
-          console.log('col - enemy -> player');
+          // console.log('col - enemy -> player');
 
           this.player.health--;
           if (this.player.health === 0) {
@@ -254,6 +180,10 @@ class notAgain extends Engine {
 
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
+
+    // console.log(this.gameScene);
+    console.log('enemy: ', this.enemyProjectiles.length);
+    // console.log('player: ', this.playerProjectiles.length);
   }
 
   render() {

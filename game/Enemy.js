@@ -92,6 +92,7 @@ class Enemy extends Actor {
     if (performance.now() - this.lastShot < GLOBAL.shotLimit) {
       return;
     }
+    console.log('shooting');
     this.enemyProj = new Projectile(x, y, targetX, targetY, 3);
     this.lastShot = performance.now();
   }
