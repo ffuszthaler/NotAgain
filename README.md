@@ -14,6 +14,5 @@
 
 ## _To Do_:
 
-- add bool flag to mouse rotation mechanic in SpriteMap.js, so it can be turned off for enemies
-- collision detection between all enemies and player (bullet hit detection)
-- make enemies look almost the same but have a dark red be the dominant clothing color
+- ~~collision detection between all enemies and player (bullet hit detection)~~ - DONE
+- ~~make enemies look almost the same but have a dark red be the dominant clothing color~~ - DONE

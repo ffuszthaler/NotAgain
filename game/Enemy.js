@@ -25,6 +25,8 @@ class Enemy extends Actor {
 
     this.health = 2;
 
+    this.lastShot = 0;
+
     this.init();
   }
 
@@ -87,7 +89,11 @@ class Enemy extends Actor {
   }
 
   shoot(x, y, targetX, targetY) {
+    if (performance.now() - this.lastShot < GLOBAL.shotLimit) {
+      return;
+    }
     this.enemyProj = new Projectile(x, y, targetX, targetY, 3);
+    this.lastShot = performance.now();
   }
 }
 
