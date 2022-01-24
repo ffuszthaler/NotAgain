@@ -2,6 +2,7 @@ import GLOBAL from '../engine/Globals.js';
 
 import Actor from '../engine/actors/Actor.js';
 import SpriteMap from '../engine/sprite/SpriteMap.js';
+import Projectile from '../engine/actors/Projectile.js';
 
 class Enemy extends Actor {
   constructor(sprites, state, scale, x, y, rotCenterX, rotCenterY) {
@@ -83,6 +84,10 @@ class Enemy extends Actor {
       w: this.texture.width,
       h: this.texture.height,
     };
+  }
+
+  shoot(x, y, targetX, targetY) {
+    this.enemyProj = new Projectile(x, y, targetX, targetY, 3);
   }
 }
 

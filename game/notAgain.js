@@ -61,6 +61,7 @@ class notAgain extends Engine {
 
   // contains player projectiles
   playerProjectiles = [];
+  enemyProjectiles = [];
 
   init() {
     super.init();
@@ -111,32 +112,52 @@ class notAgain extends Engine {
       this.player.texture.rotCenterY = e.offsetY;
     });
 
+    // update enemy rotation towards new player position
     this.enemy1.texture.rotCenterX = this.player.texture.x;
     this.enemy1.texture.rotCenterY = this.player.texture.y;
 
     this.enemy2.texture.rotCenterX = this.player.texture.x;
     this.enemy2.texture.rotCenterY = this.player.texture.y;
 
+    // have the enemy shoot at the player
+    this.enemy1.shoot(this.enemy1.texture.x, this.enemy1.texture.y, this.player.texture.x, this.player.texture.y);
+    this.enemyProjectiles.push(this.enemy1.enemyProj);
+    this.gameScene.addToScene(this.enemy1.enemyProj);
+
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
 
-    // check of player projectile has hit enemy1
-    // and if it did delete it afterwards
-    let projToDel = [];
-
+    // check of player projectile has hit enemy
+    // and if it did, delete it afterwards
+    let playerProjToDel = [];
     this.playerProjectiles.forEach((proj) => {
       if (checkCollisionBetween(proj, this.enemy1)) {
-        projToDel.push(proj);
-        console.log('col');
+        playerProjToDel.push(proj);
+        console.log('col - player -> enemy');
       }
     });
 
-    projToDel.forEach((proj) => {
+    // delete player projectile that hit enemies
+    playerProjToDel.forEach((proj) => {
       this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
       this.gameScene.removeFromScene(proj);
     });
 
-    console.log(this.playerProjectiles);
+    // check if enemy projectile has hit player
+    // and if it did, delete it afterwards
+    let enemyProjToDel = [];
+    this.enemyProjectiles.forEach((proj) => {
+      if (checkCollisionBetween(proj, this.player)) {
+        enemyProjToDel.push(proj);
+        console.log('col - enemy -> player');
+      }
+    });
+
+    // delete enemy projectile that hit the player
+    enemyProjToDel.forEach((proj) => {
+      this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
+      this.gameScene.removeFromScene(proj);
+    });
   }
 
   render() {
