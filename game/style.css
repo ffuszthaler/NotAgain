@@ -8,6 +8,7 @@ canvas {
   background-image: url('./assets/background.png');
   border-radius: 0.5rem;
   filter: drop-shadow(30px 30px 30px rgba(48, 43, 21, 1));
+  cursor: crosshair;
 }
 
 #wrapper {
