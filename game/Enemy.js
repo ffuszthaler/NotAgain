@@ -61,15 +61,6 @@ class Enemy extends Actor {
       this.dx /= Math.hypot(this.dx, this.dy);
       this.dy /= Math.hypot(this.dx, this.dy);
     }
-
-    // GLOBAL.player.state = dx === 0 && dy === 0 ? 'idle' : 'run';
-    // sprite hack bc i dont have a running cycle rn
-    // this.texture.state = this.dx === 0 && this.dy === 0 ? 'enemy_idle' : 'enemy_idle';
-
-    // this.texture.x += deltaTime * this.dx * this.velocity;
-    // this.texture.y += deltaTime * this.dy * this.velocity;
-
-    // add the shooting at player mechanic here
   }
 
   render() {

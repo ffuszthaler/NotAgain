@@ -125,10 +125,6 @@ class notAgain extends Engine {
     for (let i = 0; i < this.enemies.length; ++i) {
       // execute enemy instance methods for every enemy inside array
 
-      // rotate enemies towards player position
-      this.enemies[i].texture.rotCenterX = this.player.texture.x;
-      this.enemies[i].texture.rotCenterY = this.player.texture.y;
-
       // this.enemies[i].shoot(
       //   this.enemies[i].texture.x,
       //   this.enemies[i].texture.y,
@@ -184,7 +180,7 @@ class notAgain extends Engine {
             console.log('player died');
 
             // remove player that was killed
-            this.gameScene.removeFromScene(this.player);
+            // this.gameScene.removeFromScene(this.player);
           }
         }
       });
@@ -192,6 +188,10 @@ class notAgain extends Engine {
         this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
         this.gameScene.removeFromScene(proj);
       });
+
+      // rotate enemies towards player position
+      this.enemies[i].texture.rotCenterX = this.player.texture.x;
+      this.enemies[i].texture.rotCenterY = this.player.texture.y;
     }
 
     // update the game scene according to GLOBAL.deltaTime
