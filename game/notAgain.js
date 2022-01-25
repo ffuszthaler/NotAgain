@@ -10,7 +10,7 @@ import Enemy from './Enemy.js';
 import Keyboard from '../engine/input/Keyboard.js';
 
 // global debug flag for development and testing
-GLOBAL.debug = true;
+GLOBAL.debug = false;
 
 // game scope
 class notAgain extends Engine {
@@ -69,6 +69,9 @@ class notAgain extends Engine {
   // initial iteration time
   iterationStartTimer = 0;
 
+  // counts the iterations
+  iterationCounter = 0;
+
   // timer event
   timerEvent = false;
 
@@ -97,6 +100,8 @@ class notAgain extends Engine {
     // time iteration which run every 10 seconds
     setInterval(() => {
       this.createIteration();
+      this.iterationCounter++;
+      console.log('time loop iteration: ', this.iterationCounter);
     }, 10000);
 
     super.continue();
@@ -117,9 +122,12 @@ class notAgain extends Engine {
     this.enemies.push(enemy);
     this.gameScene.addToScene(enemy);
 
+    // setInterval(() => {
+    // this.shoot(this.x, this.y, this.playerX, this.playerY);
     enemy.shoot(enemy.texture.x, enemy.texture.y, this.player.texture.x, this.player.texture.y);
     this.enemyProjectiles.push(enemy.enemyProj);
     this.gameScene.addToScene(enemy.enemyProj);
+    // }, randomNumberBetween(100, 2000));
   }
 
   update() {
@@ -176,20 +184,8 @@ class notAgain extends Engine {
       }
     });
 
+    // execute enemy instance methods for every enemy inside array
     for (let i = 0; i < this.enemies.length; ++i) {
-      // execute enemy instance methods for every enemy inside array
-
-      // this.enemies[i].shoot(
-      //   this.enemies[i].texture.x,
-      //   this.enemies[i].texture.y,
-      //   this.player.texture.x,
-      //   this.player.texture.y
-      // );
-      // this.enemyProjectiles.push(this.enemies[i].enemyProj);
-      // this.gameScene.addToScene(this.enemies[i].enemyProj);
-
-      // !: seems to be the shooting mechanic of the enemies inside the update
-
       // rotate enemies towards player position
       this.enemies[i].texture.rotCenterX = this.player.texture.x;
       this.enemies[i].texture.rotCenterY = this.player.texture.y;
@@ -208,7 +204,6 @@ class notAgain extends Engine {
             // remove enemy that was killed
             this.gameScene.removeFromScene(this.enemies[i]);
             enemiesToDel.push(this.enemies[i]);
-            // this.enemies.splice(i, 1);
 
             // add one point to score & display it
             this.points++;

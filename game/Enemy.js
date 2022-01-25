@@ -33,10 +33,10 @@ class Enemy extends Actor {
     this.init();
 
     // let the enemy shoot every x amount of seconds
-    setInterval(() => {
-      console.log('am shootin');
-      this.shoot(this.x, this.y, this.playerX, this.playerY);
-    }, 2000);
+    // setInterval(() => {
+    //   console.log('am shootin');
+    //   this.shoot(this.x, this.y, this.playerX, this.playerY);
+    // }, 2000);
   }
 
   init() {
@@ -99,7 +99,6 @@ class Enemy extends Actor {
     if (performance.now() - this.lastShot < GLOBAL.shotLimit) {
       return;
     }
-    console.log('you shot me, bitch');
     this.enemyProj = new Projectile(x, y, targetX, targetY, 3);
     this.lastShot = performance.now();
   }
