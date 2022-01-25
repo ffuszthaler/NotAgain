@@ -7,6 +7,7 @@ import Projectile from '../engine/actors/Projectile.js';
 
 import Player from './Player.js';
 import Enemy from './Enemy.js';
+import Keyboard from '../engine/input/Keyboard.js';
 
 // global debug flag for development and testing
 GLOBAL.debug = false;
@@ -68,12 +69,17 @@ class notAgain extends Engine {
   // initial iteration time
   iterationStartTimer = 0;
 
+  // timer event
+  timerEvent = false;
+
   init() {
     super.init();
 
     // create player
     this.player = new Player(this.sprites, this.playerState, 1, 200, 200);
     this.gameScene.addToScene(this.player);
+
+    this.keyboard = new Keyboard();
 
     // left mouse button to shoot a bullet as the player
     document.addEventListener('mousedown', (e) => {
@@ -140,18 +146,32 @@ class notAgain extends Engine {
       // & delete player projectile that hit enemies
       let playerProjToDel = [];
       this.playerProjectiles.forEach((proj) => {
+        // projectile bounds detection for player projectiles
+        if (proj.projCol.right) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.right = false;
+        }
+        if (proj.projCol.left) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.left = false;
+        }
+        if (proj.projCol.bottom) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.bottom = false;
+        }
+        if (proj.projCol.top) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.top = false;
+        }
+
         if (checkCollisionBetween(proj, this.enemies[i])) {
           playerProjToDel.push(proj);
-          console.log('col - player -> enemy');
+          // console.log('col - player -> enemy');
 
           this.enemies[i].health--;
           if (this.enemies[i].health === 0) {
-            console.log('enemy died');
-
-            // add one point to score
+            // add one point to score & display it
             this.points++;
-            console.log('score: ', this.points);
-
             let scoreElement = document.getElementById('score');
             scoreElement.innerText = this.points + ' Pts';
 
@@ -165,10 +185,33 @@ class notAgain extends Engine {
         this.gameScene.removeFromScene(proj);
       });
 
+      // if (this.points === 3 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
+      //   this.timerEvent = true;
+      //   console.log('hi from e');
+      // }
+
       // enemy -> player
       // & delete enemy projectile that hit the player
       let enemyProjToDel = [];
+      // projectile bounds detection for enemies projectiles
       this.enemyProjectiles.forEach((proj) => {
+        if (proj.projCol.right) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.right = false;
+        }
+        if (proj.projCol.left) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.left = false;
+        }
+        if (proj.projCol.bottom) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.bottom = false;
+        }
+        if (proj.projCol.top) {
+          this.gameScene.removeFromScene(proj);
+          proj.projCol.top = false;
+        }
+
         if (checkCollisionBetween(proj, this.player)) {
           enemyProjToDel.push(proj);
           // console.log('col - enemy -> player');
@@ -197,7 +240,7 @@ class notAgain extends Engine {
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
 
-    // console.log(this.gameScene);
+    console.log(this.gameScene.actors);
     console.log('enemy - proj: ', this.enemyProjectiles.length);
   }
 

@@ -59,9 +59,9 @@ class Player extends Actor {
       this.dx = 0;
     }
 
-    if (this.keyboard.currentKeys['KeyE'] === true) {
-      console.log('hi from e');
-    }
+    // if (this.keyboard.currentKeys['KeyE'] === true) {
+    //   console.log('hi from e');
+    // }
     // bounds detection
     // right
     if (this.texture.x + this.texture.width / 2 > GLOBAL.windowWidth)

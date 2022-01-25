@@ -26,6 +26,13 @@ class Projectile extends Actor {
       y: 0,
     };
 
+    this.projCol = {
+      top: false,
+      bottom: false,
+      left: false,
+      right: false,
+    };
+
     // has to be here, because of context reasons
     this.init();
   }
@@ -53,6 +60,27 @@ class Projectile extends Actor {
     // update based on direction and GLOBAL.deltaTime
     this.projPos.x += this.direction.x * GLOBAL.deltaTime * 1;
     this.projPos.y += this.direction.y * GLOBAL.deltaTime * 1;
+
+    // bounds detection
+    // right
+    if (this.projPos.x + this.radius / 2 > GLOBAL.windowWidth) {
+      this.projCol.right = true;
+    }
+
+    // left
+    if (this.projPos.x - this.radius / 2 < 0) {
+      this.projCol.left = true;
+    }
+
+    // bottom
+    if (this.projPos.y + this.radius / 2 > GLOBAL.windowHeight) {
+      this.projCol.bottom = true;
+    }
+
+    // top
+    if (this.projPos.y - this.radius / 2 < 0) {
+      this.projCol.top = true;
+    }
   }
 
   render() {
