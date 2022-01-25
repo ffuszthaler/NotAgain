@@ -13,7 +13,7 @@ const GLOBAL = {
   debug: false,
 
   // shooting rate of enemies
-  shotLimit: 700,
+  shotLimit: 2000,
 };
 
 export default GLOBAL;

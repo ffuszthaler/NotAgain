@@ -104,13 +104,16 @@ class notAgain extends Engine {
       randomNumberBetween(0, GLOBAL.windowWidth),
       randomNumberBetween(0, GLOBAL.windowHeight)
     );
+
     // push newly created enemies into array
     this.enemies.push(enemy);
     this.gameScene.addToScene(enemy);
 
-    // console.log(this.enemies);
+    enemy.shoot(enemy.texture.x, enemy.texture.y, this.player.texture.x, this.player.texture.y);
+    this.enemyProjectiles.push(enemy.enemyProj);
+    this.gameScene.addToScene(enemy.enemyProj);
 
-    // execute its methods for every enemy inside array
+    console.log(this.enemies);
   }
 
   update() {
@@ -119,21 +122,23 @@ class notAgain extends Engine {
       this.player.texture.rotCenterY = e.offsetY;
     });
 
-    for (let i = 0; i < this.enemies.length; i++) {
+    for (let i = 0; i < this.enemies.length; ++i) {
+      // execute enemy instance methods for every enemy inside array
+
       // rotate enemies towards player position
       this.enemies[i].texture.rotCenterX = this.player.texture.x;
       this.enemies[i].texture.rotCenterY = this.player.texture.y;
 
-      this.enemies[i].shoot(
-        this.enemies[i].texture.x,
-        this.enemies[i].texture.y,
-        this.player.texture.x,
-        this.player.texture.y
-      );
-      this.enemyProjectiles.push(this.enemies[i].enemyProj);
-      this.gameScene.addToScene(this.enemies[i].enemyProj);
+      // this.enemies[i].shoot(
+      //   this.enemies[i].texture.x,
+      //   this.enemies[i].texture.y,
+      //   this.player.texture.x,
+      //   this.player.texture.y
+      // );
+      // this.enemyProjectiles.push(this.enemies[i].enemyProj);
+      // this.gameScene.addToScene(this.enemies[i].enemyProj);
 
-      // may be related to the changing position of the player, and the creation of projectiles when moving (values update inside the update loop (high fps))
+      // !: seems to be the shooting mechanic of the enemies inside the update
 
       // player -> enemy
       // & delete player projectile that hit enemies
@@ -150,6 +155,12 @@ class notAgain extends Engine {
             // add one point to score
             this.points++;
             console.log('score: ', this.points);
+
+            let scoreElement = document.getElementById('score');
+            scoreElement.innerText = this.points + ' Pts';
+
+            // remove enemy that was killed
+            this.gameScene.removeFromScene(this.enemies[i]);
           }
         }
       });
@@ -167,8 +178,13 @@ class notAgain extends Engine {
           // console.log('col - enemy -> player');
 
           this.player.health--;
+          console.log('player health: ', this.player.health);
+
           if (this.player.health === 0) {
             console.log('player died');
+
+            // remove player that was killed
+            this.gameScene.removeFromScene(this.player);
           }
         }
       });
@@ -182,8 +198,7 @@ class notAgain extends Engine {
     this.gameScene.update(GLOBAL.deltaTime);
 
     // console.log(this.gameScene);
-    console.log('enemy: ', this.enemyProjectiles.length);
-    // console.log('player: ', this.playerProjectiles.length);
+    console.log('enemy - proj: ', this.enemyProjectiles.length);
   }
 
   render() {

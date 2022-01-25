@@ -1,6 +1,3 @@
-import GLOBAL from './Globals.js';
-import Sprite from './sprite/Sprite.js';
-
 class Scene {
   actors;
 

@@ -25,6 +25,8 @@ class Player extends Actor {
 
     this.health = 3;
 
+    this.currentKeys = {};
+
     this.init();
   }
 
@@ -40,25 +42,70 @@ class Player extends Actor {
     );
 
     this.keyboard = new Keyboard();
+
+    document.addEventListener('keydown', (e) => {
+      this.currentKeys[e.code] = true;
+
+      // prevents scrolling if one of these keys is pressed
+      if (
+        this.currentKeys['ArrowUp'] === true ||
+        this.currentKeys['KeyW'] === true ||
+        this.currentKeys['ArrowDown'] === true ||
+        this.currentKeys['KeyS'] === true ||
+        this.currentKeys['ArrowLeft'] === true ||
+        this.currentKeys['KeyA'] === true ||
+        this.currentKeys['ArrowRight'] === true ||
+        this.currentKeys['KeyD'] === true
+      ) {
+        e.preventDefault();
+      }
+    });
+
+    document.addEventListener('keyup', (e) => {
+      this.currentKeys[e.code] = false;
+    });
   }
 
   update(deltaTime) {
-    this.keyboard.keyPressed('KeyW', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyS']) this.dy = isPressed ? -1 : 0;
-    });
+    // this.keyboard.keyPressed('KeyW', (isPressed, currentKeys) => {
+    //   if (!currentKeys['KeyS']) this.dy = isPressed ? -1 : 0;
+    // });
 
-    this.keyboard.keyPressed('KeyA', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyD']) this.dx = isPressed ? -1 : 0;
-    });
+    // this.keyboard.keyPressed('KeyA', (isPressed, currentKeys) => {
+    //   if (!currentKeys['KeyD']) this.dx = isPressed ? -1 : 0;
+    // });
 
-    this.keyboard.keyPressed('KeyS', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyW']) this.dy = isPressed ? 1 : 0;
-    });
+    // this.keyboard.keyPressed('KeyS', (isPressed, currentKeys) => {
+    //   if (!currentKeys['KeyW']) this.dy = isPressed ? 1 : 0;
+    // });
 
-    this.keyboard.keyPressed('KeyD', (isPressed, currentKeys) => {
-      if (!currentKeys['KeyA']) this.dx = isPressed ? 1 : 0;
-    });
+    // this.keyboard.keyPressed('KeyD', (isPressed, currentKeys) => {
+    //   if (!currentKeys['KeyA']) this.dx = isPressed ? 1 : 0;
+    // });
 
+    // this.keyboard.keyPressed('KeyE', (isPressed, currentKeys) => {
+    //   console.log('hi from e');
+    // });
+
+    if (this.currentKeys['KeyW'] === true) {
+      this.dy = -1;
+    } else if (this.currentKeys['KeyS'] === true) {
+      this.dy = 1;
+    } else {
+      this.dy = 0;
+    }
+
+    if (this.currentKeys['KeyA'] === true) {
+      this.dx = -1;
+    } else if (this.currentKeys['KeyD'] === true) {
+      this.dx = 1;
+    } else {
+      this.dx = 0;
+    }
+
+    if (this.currentKeys['KeyE'] === true) {
+      console.log('hi from e');
+    }
     // bounds detection
     // right
     if (this.texture.x + this.texture.width / 2 > GLOBAL.windowWidth)
