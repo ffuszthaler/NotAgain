@@ -10,7 +10,7 @@ import Enemy from './Enemy.js';
 import Keyboard from '../engine/input/Keyboard.js';
 
 // global debug flag for development and testing
-GLOBAL.debug = false;
+GLOBAL.debug = true;
 
 // game scope
 class notAgain extends Engine {
@@ -128,6 +128,54 @@ class notAgain extends Engine {
       this.player.texture.rotCenterY = e.offsetY;
     });
 
+    // bounds detection for player projectiles
+    this.playerProjectiles.forEach((proj) => {
+      if (proj.projCol.right) {
+        this.gameScene.removeFromScene(proj);
+        this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
+        proj.projCol.right = false;
+      }
+      if (proj.projCol.left) {
+        this.gameScene.removeFromScene(proj);
+        this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
+        proj.projCol.left = false;
+      }
+      if (proj.projCol.bottom) {
+        this.gameScene.removeFromScene(proj);
+        this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
+        proj.projCol.bottom = false;
+      }
+      if (proj.projCol.top) {
+        this.gameScene.removeFromScene(proj);
+        this.playerProjectiles.splice(this.playerProjectiles.indexOf(proj), 1);
+        proj.projCol.top = false;
+      }
+    });
+
+    // bounds detection for enemy projectiles
+    this.enemyProjectiles.forEach((proj) => {
+      if (proj.projCol.right) {
+        this.gameScene.removeFromScene(proj);
+        this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
+        proj.projCol.right = false;
+      }
+      if (proj.projCol.left) {
+        this.gameScene.removeFromScene(proj);
+        this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
+        proj.projCol.left = false;
+      }
+      if (proj.projCol.bottom) {
+        this.gameScene.removeFromScene(proj);
+        this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
+        proj.projCol.bottom = false;
+      }
+      if (proj.projCol.top) {
+        this.gameScene.removeFromScene(proj);
+        this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
+        proj.projCol.top = false;
+      }
+    });
+
     for (let i = 0; i < this.enemies.length; ++i) {
       // execute enemy instance methods for every enemy inside array
 
@@ -146,37 +194,19 @@ class notAgain extends Engine {
       // & delete player projectile that hit enemies
       let playerProjToDel = [];
       this.playerProjectiles.forEach((proj) => {
-        // projectile bounds detection for player projectiles
-        if (proj.projCol.right) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.right = false;
-        }
-        if (proj.projCol.left) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.left = false;
-        }
-        if (proj.projCol.bottom) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.bottom = false;
-        }
-        if (proj.projCol.top) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.top = false;
-        }
-
         if (checkCollisionBetween(proj, this.enemies[i])) {
           playerProjToDel.push(proj);
           // console.log('col - player -> enemy');
 
           this.enemies[i].health--;
           if (this.enemies[i].health === 0) {
+            // remove enemy that was killed
+            this.gameScene.removeFromScene(this.enemies[i]);
+
             // add one point to score & display it
             this.points++;
             let scoreElement = document.getElementById('score');
             scoreElement.innerText = this.points + ' Pts';
-
-            // remove enemy that was killed
-            this.gameScene.removeFromScene(this.enemies[i]);
           }
         }
       });
@@ -195,23 +225,6 @@ class notAgain extends Engine {
       let enemyProjToDel = [];
       // projectile bounds detection for enemies projectiles
       this.enemyProjectiles.forEach((proj) => {
-        if (proj.projCol.right) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.right = false;
-        }
-        if (proj.projCol.left) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.left = false;
-        }
-        if (proj.projCol.bottom) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.bottom = false;
-        }
-        if (proj.projCol.top) {
-          this.gameScene.removeFromScene(proj);
-          proj.projCol.top = false;
-        }
-
         if (checkCollisionBetween(proj, this.player)) {
           enemyProjToDel.push(proj);
           // console.log('col - enemy -> player');
@@ -240,8 +253,9 @@ class notAgain extends Engine {
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
 
-    console.log(this.gameScene.actors);
-    console.log('enemy - proj: ', this.enemyProjectiles.length);
+    console.log('actors: ', this.gameScene.actors);
+    console.log('enemy: ', this.enemyProjectiles.length);
+    console.log('player: ', this.playerProjectiles.length);
   }
 
   render() {

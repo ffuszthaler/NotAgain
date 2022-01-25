@@ -21,3 +21,11 @@ canvas {
 #subtitle {
   margin-top: 10px;
 }
+
+#score {
+  color: white;
+  font-weight: bold;
+  font-size: 40px;
+  margin: 0;
+  user-select: none;
+}

@@ -91,6 +91,13 @@ class Player extends Actor {
     super.render();
 
     this.texture.render();
+
+    if (GLOBAL.debug) {
+      let bb = this.getBoundingBox();
+      GLOBAL.ctx.translate(bb.x, bb.y);
+      GLOBAL.ctx.strokeRect(0, 0, bb.w, bb.h);
+      GLOBAL.ctx.resetTransform();
+    }
   }
 
   // get bounding box values for player
