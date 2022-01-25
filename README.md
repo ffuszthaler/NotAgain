@@ -16,6 +16,7 @@
 
 - ~~collision detection between all enemies and player (bullet hit detection)~~ - DONE
 - ~~make enemies look almost the same but have a dark red be the dominant clothing color~~ - DONE
+- PHYSICS PART! (mandatory)
 - 1min timer once you hit a certain score
 - UI (health bar, 1min timer, player score/kills, press e to call reinforcements)
 - Main Menu, End screen showing score using HTML, CSS
