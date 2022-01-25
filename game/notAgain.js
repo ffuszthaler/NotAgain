@@ -87,13 +87,16 @@ class notAgain extends Engine {
     // left mouse button to shoot a bullet as the player
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
-        let playerProj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
+        // only shoot if player is alive
+        if (this.player.health != 0) {
+          let playerProj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
 
-        // add to scene
-        this.gameScene.addToScene(playerProj);
+          // add to scene
+          this.gameScene.addToScene(playerProj);
 
-        // add to player projectile array, to be deleted
-        this.playerProjectiles.push(playerProj);
+          // add to player projectile array, to be deleted
+          this.playerProjectiles.push(playerProj);
+        }
       }
     });
 
@@ -244,7 +247,7 @@ class notAgain extends Engine {
             console.log('player died');
 
             // remove player that was killed
-            // this.gameScene.removeFromScene(this.player);
+            this.gameScene.removeFromScene(this.player);
           }
         }
       });

@@ -34,7 +34,7 @@ class Enemy extends Actor {
 
     // let the enemy shoot every x amount of seconds
     // setInterval(() => {
-    //   console.log('am shootin');
+    //   console.log('am shooting');
     //   this.shoot(this.x, this.y, this.playerX, this.playerY);
     // }, 2000);
   }
