@@ -10,7 +10,6 @@ class Scene {
   init() {}
 
   update(deltaTime) {
-    // console.log(this.actors);
     this.actors.forEach((actor) => {
       actor.update(deltaTime);
     });

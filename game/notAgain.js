@@ -108,7 +108,9 @@ class notAgain extends Engine {
       this.enemyState,
       1,
       randomNumberBetween(0, GLOBAL.windowWidth),
-      randomNumberBetween(0, GLOBAL.windowHeight)
+      randomNumberBetween(0, GLOBAL.windowHeight),
+      this.player.texture.x,
+      this.player.texture.y
     );
 
     // push newly created enemies into array
@@ -118,8 +120,6 @@ class notAgain extends Engine {
     enemy.shoot(enemy.texture.x, enemy.texture.y, this.player.texture.x, this.player.texture.y);
     this.enemyProjectiles.push(enemy.enemyProj);
     this.gameScene.addToScene(enemy.enemyProj);
-
-    console.log(this.enemies);
   }
 
   update() {
@@ -190,8 +190,13 @@ class notAgain extends Engine {
 
       // !: seems to be the shooting mechanic of the enemies inside the update
 
+      // rotate enemies towards player position
+      this.enemies[i].texture.rotCenterX = this.player.texture.x;
+      this.enemies[i].texture.rotCenterY = this.player.texture.y;
+
       // player -> enemy
       // & delete player projectile that hit enemies
+      let enemiesToDel = [];
       let playerProjToDel = [];
       this.playerProjectiles.forEach((proj) => {
         if (checkCollisionBetween(proj, this.enemies[i])) {
@@ -202,6 +207,8 @@ class notAgain extends Engine {
           if (this.enemies[i].health === 0) {
             // remove enemy that was killed
             this.gameScene.removeFromScene(this.enemies[i]);
+            enemiesToDel.push(this.enemies[i]);
+            // this.enemies.splice(i, 1);
 
             // add one point to score & display it
             this.points++;
@@ -215,10 +222,16 @@ class notAgain extends Engine {
         this.gameScene.removeFromScene(proj);
       });
 
-      // if (this.points === 3 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
-      //   this.timerEvent = true;
-      //   console.log('hi from e');
-      // }
+      // delete dead enemies from game
+      enemiesToDel.forEach((enemy) => {
+        this.enemies.splice(this.enemies.indexOf(enemy), 1);
+      });
+
+      // timer section
+      if (this.points === 3 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
+        this.timerEvent = true;
+        console.log('hi from e');
+      }
 
       // enemy -> player
       // & delete enemy projectile that hit the player
@@ -244,18 +257,10 @@ class notAgain extends Engine {
         this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
         this.gameScene.removeFromScene(proj);
       });
-
-      // rotate enemies towards player position
-      this.enemies[i].texture.rotCenterX = this.player.texture.x;
-      this.enemies[i].texture.rotCenterY = this.player.texture.y;
     }
 
     // update the game scene according to GLOBAL.deltaTime
     this.gameScene.update(GLOBAL.deltaTime);
-
-    console.log('actors: ', this.gameScene.actors);
-    console.log('enemy: ', this.enemyProjectiles.length);
-    console.log('player: ', this.playerProjectiles.length);
   }
 
   render() {

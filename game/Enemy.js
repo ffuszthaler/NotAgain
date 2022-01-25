@@ -5,7 +5,7 @@ import SpriteMap from '../engine/sprite/SpriteMap.js';
 import Projectile from '../engine/actors/Projectile.js';
 
 class Enemy extends Actor {
-  constructor(sprites, state, scale, x, y, rotCenterX, rotCenterY) {
+  constructor(sprites, state, scale, x, y, rotCenterX, rotCenterY, playerX, playerY) {
     super(x, y);
 
     this.dx = 0;
@@ -23,11 +23,20 @@ class Enemy extends Actor {
     this.rotCenterX = rotCenterX;
     this.rotCenterY = rotCenterY;
 
+    this.playerX = playerX;
+    this.playerX = playerY;
+
     this.health = 2;
 
     this.lastShot = 0;
 
     this.init();
+
+    // let the enemy shoot every x amount of seconds
+    setInterval(() => {
+      console.log('am shootin');
+      this.shoot(this.x, this.y, this.playerX, this.playerY);
+    }, 2000);
   }
 
   init() {
@@ -90,7 +99,7 @@ class Enemy extends Actor {
     if (performance.now() - this.lastShot < GLOBAL.shotLimit) {
       return;
     }
-    console.log('shooting');
+    console.log('you shot me, bitch');
     this.enemyProj = new Projectile(x, y, targetX, targetY, 3);
     this.lastShot = performance.now();
   }
