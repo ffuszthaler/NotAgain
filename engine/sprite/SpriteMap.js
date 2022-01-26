@@ -37,9 +37,6 @@ class SpriteMap {
     // calculate mouse rotation
     GLOBAL.canvas.addEventListener('mousemove', (e) => {
       //  Calculate rotation angle
-      // let targetX = e.offsetX;
-      // let targetY = e.offsetY;
-
       let targetX = this.rotCenterX;
       let targetY = this.rotCenterY;
 
