@@ -286,7 +286,7 @@ class notAgain extends Engine {
     if (this.points >= this.timerPoints && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
       this.timerEvent = true;
 
-      if (this.playerIsDead) {
+      if (!this.playerIsDead) {
         this.reinforcementWaitTime = setTimeout(() => {
           GLOBAL.gameStarted = false;
 
