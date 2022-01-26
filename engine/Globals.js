@@ -14,6 +14,9 @@ const GLOBAL = {
 
   // shooting rate of enemies
   shotLimit: 2000,
+
+  // game start state
+  gameStarted: false,
 };
 
 export default GLOBAL;

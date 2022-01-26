@@ -71,12 +71,28 @@ class notAgain extends Engine {
 
   // counts the iterations
   iterationCounter = 0;
+  iterationTimer;
+
+  // reinforcement time out
+  reinforcementWaitTime;
 
   // timer event
   timerEvent = false;
+  timerPoints = 3;
+
+  // player death state
+  playerIsDead = false;
 
   init() {
     super.init();
+
+    // reset relevant game values for initialization
+    this.points = 0;
+    this.iterationCounter = 0;
+    this.gameScene.actors.length = 0;
+    this.enemies.length = 0;
+    clearInterval(this.iterationTimer);
+    clearTimeout(this.reinforcementWaitTime);
 
     // create player
     this.player = new Player(this.sprites, this.playerState, 1, 200, 200);
@@ -101,9 +117,8 @@ class notAgain extends Engine {
     });
 
     // time iteration which run every 10 seconds
-    setInterval(() => {
+    this.iterationTimer = setInterval(() => {
       this.createIteration();
-      // console.log('time loop iteration: ', this.iterationCounter);
     }, 10000);
 
     super.continue();
@@ -204,7 +219,6 @@ class notAgain extends Engine {
       this.playerProjectiles.forEach((proj) => {
         if (checkCollisionBetween(proj, this.enemies[i])) {
           playerProjToDel.push(proj);
-          // console.log('col - player -> enemy');
 
           this.enemies[i].health--;
           if (this.enemies[i].health === 0) {
@@ -212,10 +226,7 @@ class notAgain extends Engine {
             this.gameScene.removeFromScene(this.enemies[i]);
             enemiesToDel.push(this.enemies[i]);
 
-            // add one point to score & display it
             this.points++;
-            // let scoreElement = document.getElementById('score');
-            // scoreElement.innerText = this.points + ' Pts';
           }
         }
       });
@@ -236,15 +247,29 @@ class notAgain extends Engine {
       this.enemyProjectiles.forEach((proj) => {
         if (checkCollisionBetween(proj, this.player)) {
           enemyProjToDel.push(proj);
-          // console.log('col - enemy -> player');
 
           this.player.health--;
-          // console.log('player health: ', this.player.health);
 
           if (this.player.health === 0) {
-            console.log('player died');
-            console.log('YOU LOST - with a score of:', this.points);
-            console.log('And until iteration:', this.iterationCounter);
+            this.playerIsDead = true;
+
+            GLOBAL.gameStarted = false;
+
+            // hide game
+            document.querySelector('canvas').style.display = 'none';
+            document.getElementById('logo').style.display = 'none';
+            // document.getElementById('startButton').style.display = 'none';
+            document.getElementById('startButton').style.display = 'block';
+
+            // show end screen
+            document.getElementById('endText').style.display = 'block';
+            document.getElementById('endPoints').style.display = 'block';
+            document.getElementById('endIteration').style.display = 'block';
+
+            // add loss data to end screen
+            document.getElementById('endText').innerText = 'YOU LOST';
+            document.getElementById('endPoints').innerText = this.points + ' Point(s)';
+            document.getElementById('endIteration').innerText = this.iterationCounter + ' Iteration(s)';
 
             // remove player that was killed
             this.gameScene.removeFromScene(this.player);
@@ -258,14 +283,30 @@ class notAgain extends Engine {
     }
 
     // timer section
-    if (this.points >= 1 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
+    if (this.points >= this.timerPoints && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
       this.timerEvent = true;
 
-      console.log('reinforcement timer started, survive for the next 30 seconds');
-      setTimeout(() => {
-        console.log('YOU WON - with a score of:', this.points);
-        console.log('And until iteration:', this.iterationCounter);
-      }, 30000);
+      if (this.playerIsDead) {
+        this.reinforcementWaitTime = setTimeout(() => {
+          GLOBAL.gameStarted = false;
+
+          // hide game
+          document.querySelector('canvas').style.display = 'none';
+          document.getElementById('logo').style.display = 'none';
+          // document.getElementById('startButton').style.display = 'none';
+          document.getElementById('startButton').style.display = 'block';
+
+          // show end screen
+          document.getElementById('endText').style.display = 'block';
+          document.getElementById('endPoints').style.display = 'block';
+          document.getElementById('endIteration').style.display = 'block';
+
+          // add loss data to end screen
+          document.getElementById('endText').innerText = 'YOU WON';
+          document.getElementById('endPoints').innerText = this.points + ' Point(s)';
+          document.getElementById('endIteration').innerText = this.iterationCounter + ' Iteration(s)';
+        }, 30000);
+      }
     }
 
     // update the game scene according to GLOBAL.deltaTime
@@ -279,14 +320,18 @@ class notAgain extends Engine {
 
     // text foreground
     GLOBAL.ctx.fillStyle = 'white';
-    GLOBAL.ctx.font = 'bold 30px monospace';
+    GLOBAL.ctx.font = 'bold 30px Arial';
     GLOBAL.ctx.textAlign = 'center';
     GLOBAL.ctx.fillText('Score: ' + this.points, GLOBAL.windowWidth - 100, 40);
 
     GLOBAL.ctx.fillText('Iteration: ' + this.iterationCounter, 110, GLOBAL.windowHeight - 20);
 
-    if (this.points >= 1 && this.timerEvent === false) {
-      GLOBAL.ctx.fillText('Press E to call reinforcements', GLOBAL.windowWidth / 2, GLOBAL.windowHeight - 20);
+    if (this.points >= this.timerPoints && this.timerEvent === false) {
+      GLOBAL.ctx.fillText(
+        'Press E to call reinforcements and survive for 30 seconds',
+        GLOBAL.windowWidth / 2,
+        GLOBAL.windowHeight / 2
+      );
     }
 
     // render the game scene
