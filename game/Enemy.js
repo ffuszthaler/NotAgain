@@ -11,7 +11,7 @@ class Enemy extends Actor {
     this.dx = 0;
     this.dy = 0;
 
-    this.velocity = 0.3;
+    // this.velocity = 0.3;
 
     this.sprites = sprites;
     this.state = state;
@@ -66,10 +66,10 @@ class Enemy extends Actor {
     else if (this.texture.y - this.texture.height / 2 < 0) this.texture.y = 0 + this.texture.height / 2;
 
     // correct velocity for moving diagonally
-    if (this.dx !== 0 && this.dy !== 0) {
-      this.dx /= Math.hypot(this.dx, this.dy);
-      this.dy /= Math.hypot(this.dx, this.dy);
-    }
+    // if (this.dx !== 0 && this.dy !== 0) {
+    //   this.dx /= Math.hypot(this.dx, this.dy);
+    //   this.dy /= Math.hypot(this.dx, this.dy);
+    // }
   }
 
   render() {

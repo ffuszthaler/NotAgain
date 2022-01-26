@@ -26,12 +26,19 @@ class Projectile extends Actor {
       y: 0,
     };
 
+    // projectile collision object
     this.projCol = {
       top: false,
       bottom: false,
       left: false,
       right: false,
     };
+
+    // initial acceleration
+    this.acceleration = 0.47;
+
+    // deceleration factor
+    this.deceleration = 0.995;
 
     // has to be here, because of context reasons
     this.init();
@@ -58,8 +65,15 @@ class Projectile extends Actor {
 
   update() {
     // update based on direction and GLOBAL.deltaTime
-    this.projPos.x += this.direction.x * GLOBAL.deltaTime * 1;
-    this.projPos.y += this.direction.y * GLOBAL.deltaTime * 1;
+    // this.projPos.x += this.direction.x * GLOBAL.deltaTime * 1;
+    // this.projPos.y += this.direction.y * GLOBAL.deltaTime * 1;
+
+    // projectile slows with time as air resistance in applied
+    this.acceleration *= this.deceleration;
+
+    // update based on direction and GLOBAL.deltaTime and air resistance
+    this.projPos.x += this.direction.x * GLOBAL.deltaTime * this.acceleration;
+    this.projPos.y += this.direction.y * GLOBAL.deltaTime * this.acceleration;
 
     // bounds detection
     // right
