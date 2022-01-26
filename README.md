@@ -4,10 +4,12 @@
 
 </br>
 
-## _Physics ideas_:
+[Play on GH Pages](https://ffuszthaler.github.io/NotAgain/game/)
 
-- Ricochet Bullets
-- Drag on certain grounds
+</br>
+
+## _Implemented Physics idea_:
+
 - Decelerating bullets (air resistance), decreasing value = air resistance = bullet velocity
 
 </br>
