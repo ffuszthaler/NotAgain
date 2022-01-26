@@ -103,7 +103,6 @@ class notAgain extends Engine {
     // time iteration which run every 10 seconds
     setInterval(() => {
       this.createIteration();
-      this.iterationCounter++;
       console.log('time loop iteration: ', this.iterationCounter);
     }, 10000);
 
@@ -111,25 +110,30 @@ class notAgain extends Engine {
   }
 
   createIteration() {
-    let enemy = new Enemy(
-      this.sprites,
-      this.enemyState,
-      1,
-      randomNumberBetween(0, GLOBAL.windowWidth),
-      randomNumberBetween(0, GLOBAL.windowHeight),
-      this.player.texture.x,
-      this.player.texture.y
-    );
+    if (this.player.health > 0) {
+      this.iterationCounter++;
 
-    // push newly created enemies into array
-    this.enemies.push(enemy);
-    this.gameScene.addToScene(enemy);
+      let enemy = new Enemy(
+        this.sprites,
+        this.enemyState,
+        1,
+        randomNumberBetween(0, GLOBAL.windowWidth),
+        randomNumberBetween(0, GLOBAL.windowHeight),
+        this.player.texture.x,
+        this.player.texture.y
+      );
 
-    // setInterval(() => {
-    // this.shoot(this.x, this.y, this.playerX, this.playerY);
-    enemy.shoot(enemy.texture.x, enemy.texture.y, this.player.texture.x, this.player.texture.y);
-    this.enemyProjectiles.push(enemy.enemyProj);
-    this.gameScene.addToScene(enemy.enemyProj);
+      // push newly created enemies into array
+      this.enemies.push(enemy);
+      this.gameScene.addToScene(enemy);
+
+      // setInterval(() => {
+      // this.shoot(this.x, this.y, this.playerX, this.playerY);
+
+      enemy.shoot(enemy.texture.x, enemy.texture.y, this.player.texture.x, this.player.texture.y);
+      this.enemyProjectiles.push(enemy.enemyProj);
+      this.gameScene.addToScene(enemy.enemyProj);
+    }
     // }, randomNumberBetween(100, 2000));
   }
 

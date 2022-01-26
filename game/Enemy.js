@@ -27,6 +27,7 @@ class Enemy extends Actor {
     this.playerX = playerY;
 
     this.health = 2;
+    this.maxHealth = 2;
 
     this.lastShot = 0;
 
@@ -76,6 +77,18 @@ class Enemy extends Actor {
     super.render();
 
     this.texture.render();
+
+    // health bar
+    let percentageHealth = this.health / this.maxHealth;
+    GLOBAL.ctx.fillStyle = '#FF0000';
+    GLOBAL.ctx.fillRect(this.x - this.texture.width / 2, this.y - 85, this.texture.width + percentageHealth, 10);
+    GLOBAL.ctx.fillStyle = '#FFFFFF';
+    GLOBAL.ctx.fillRect(
+      this.x - this.texture.width / 2,
+      this.y - 85,
+      this.texture.width - this.texture.width * percentageHealth,
+      10
+    );
 
     if (GLOBAL.debug) {
       let bb = this.getBoundingBox();

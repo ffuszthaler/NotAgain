@@ -24,6 +24,7 @@ class Player extends Actor {
     this.rotCenterY = rotCenterY;
 
     this.health = 3;
+    this.maxHealth = 3;
 
     this.init();
   }
@@ -88,6 +89,13 @@ class Player extends Actor {
     super.render();
 
     this.texture.render();
+
+    // health bar
+    let percentageHealth = this.health / this.maxHealth;
+    GLOBAL.ctx.fillStyle = '#00FF00';
+    GLOBAL.ctx.fillRect(20, 20, this.texture.width + percentageHealth, 10);
+    GLOBAL.ctx.fillStyle = '#FFFFFF';
+    GLOBAL.ctx.fillRect(20, 20, this.texture.width - this.texture.width * percentageHealth, 10);
 
     if (GLOBAL.debug) {
       let bb = this.getBoundingBox();
