@@ -88,7 +88,7 @@ class notAgain extends Engine {
     document.addEventListener('mousedown', (e) => {
       if (e.button === 0) {
         // only shoot if player is alive
-        if (this.player.health != 0) {
+        if (this.player.health > 0) {
           let playerProj = new Projectile(this.player.texture.x, this.player.texture.y, e.offsetX, e.offsetY, 3);
 
           // add to scene
