@@ -103,7 +103,7 @@ class notAgain extends Engine {
     // time iteration which run every 10 seconds
     setInterval(() => {
       this.createIteration();
-      console.log('time loop iteration: ', this.iterationCounter);
+      // console.log('time loop iteration: ', this.iterationCounter);
     }, 10000);
 
     super.continue();
@@ -214,8 +214,8 @@ class notAgain extends Engine {
 
             // add one point to score & display it
             this.points++;
-            let scoreElement = document.getElementById('score');
-            scoreElement.innerText = this.points + ' Pts';
+            // let scoreElement = document.getElementById('score');
+            // scoreElement.innerText = this.points + ' Pts';
           }
         }
       });
@@ -239,7 +239,7 @@ class notAgain extends Engine {
           // console.log('col - enemy -> player');
 
           this.player.health--;
-          console.log('player health: ', this.player.health);
+          // console.log('player health: ', this.player.health);
 
           if (this.player.health === 0) {
             console.log('player died');
@@ -260,6 +260,7 @@ class notAgain extends Engine {
     // timer section
     if (this.points >= 1 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
       this.timerEvent = true;
+
       console.log('reinforcement timer started, survive for the next 30 seconds');
       setTimeout(() => {
         console.log('YOU WON - with a score of:', this.points);
@@ -275,6 +276,18 @@ class notAgain extends Engine {
     // clear canvas before drawing
     GLOBAL.ctx.resetTransform();
     GLOBAL.ctx.clearRect(0, 0, GLOBAL.windowWidth, GLOBAL.windowHeight);
+
+    // text foreground
+    GLOBAL.ctx.fillStyle = 'white';
+    GLOBAL.ctx.font = 'bold 30px monospace';
+    GLOBAL.ctx.textAlign = 'center';
+    GLOBAL.ctx.fillText('Score: ' + this.points, GLOBAL.windowWidth - 100, 40);
+
+    GLOBAL.ctx.fillText('Iteration: ' + this.iterationCounter, 110, GLOBAL.windowHeight - 20);
+
+    if (this.points >= 1 && this.timerEvent === false) {
+      GLOBAL.ctx.fillText('Press E to call reinforcements', GLOBAL.windowWidth / 2, GLOBAL.windowHeight - 20);
+    }
 
     // render the game scene
     this.gameScene.render();

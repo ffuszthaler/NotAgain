@@ -5,6 +5,7 @@ body {
 }
 
 canvas {
+  display: none;
   background-image: url('./assets/background.png');
   border-radius: 0.5rem;
   filter: drop-shadow(30px 30px 30px rgba(48, 43, 21, 1));
@@ -23,10 +24,10 @@ canvas {
   margin-top: 10px;
 }
 
-#score {
-  color: white;
-  font-weight: bold;
-  font-size: 40px;
-  margin: 0;
+#startButton {
+  user-select: none;
+}
+
+#logo {
   user-select: none;
 }
