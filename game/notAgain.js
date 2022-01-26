@@ -225,12 +225,6 @@ class notAgain extends Engine {
         this.enemies.splice(this.enemies.indexOf(enemy), 1);
       });
 
-      // timer section
-      if (this.points === 3 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
-        this.timerEvent = true;
-        console.log('hi from e');
-      }
-
       // enemy -> player
       // & delete enemy projectile that hit the player
       let enemyProjToDel = [];
@@ -245,6 +239,8 @@ class notAgain extends Engine {
 
           if (this.player.health === 0) {
             console.log('player died');
+            console.log('YOU LOST - with a score of:', this.points);
+            console.log('And until iteration:', this.iterationCounter);
 
             // remove player that was killed
             this.gameScene.removeFromScene(this.player);
@@ -255,6 +251,16 @@ class notAgain extends Engine {
         this.enemyProjectiles.splice(this.enemyProjectiles.indexOf(proj), 1);
         this.gameScene.removeFromScene(proj);
       });
+    }
+
+    // timer section
+    if (this.points >= 1 && this.keyboard.currentKeys['KeyE'] === true && this.timerEvent === false) {
+      this.timerEvent = true;
+      console.log('reinforcement timer started, survive for the next 30 seconds');
+      setTimeout(() => {
+        console.log('YOU WON - with a score of:', this.points);
+        console.log('And until iteration:', this.iterationCounter);
+      }, 30000);
     }
 
     // update the game scene according to GLOBAL.deltaTime
